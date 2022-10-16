@@ -4,6 +4,7 @@ import 'package:frenzy_store/presentation/login/login_view.dart';
 import 'package:frenzy_store/presentation/main/main_view.dart';
 import 'package:frenzy_store/presentation/onboarding/onboarding_view.dart';
 import 'package:frenzy_store/presentation/register/register_view.dart';
+import 'package:frenzy_store/presentation/resources/strings_manager.dart';
 import 'package:frenzy_store/presentation/splash/splash_view.dart';
 import 'package:frenzy_store/presentation/store_details/store_details_view.dart';
 
@@ -43,9 +44,9 @@ class RouteGenerator {
     return MaterialPageRoute(
         builder: (_) => Scaffold(
               appBar: AppBar(
-                title: const Text("no page route"),
+                title: const Text(AppStrings.noRouteFound),
               ),
-              body: const Center(child: Text("no page route")),
+              body: const Center(child: Text(AppStrings.noRouteFound)),
             ));
   }
 }
