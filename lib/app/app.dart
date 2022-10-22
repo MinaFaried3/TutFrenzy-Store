@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frenzy_store/presentation/resources/routes_manager.dart';
 
 import '../presentation/resources/themes_manager.dart';
 
@@ -19,6 +20,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(),
+      onGenerateRoute: RouteGenerator.getRoute,
+      initialRoute: Routes.splashRoute,
     );
   }
 }
