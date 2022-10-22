@@ -12,6 +12,7 @@ ThemeData getApplicationTheme() {
     primaryColorDark: ColorManager.darkPrimary,
     disabledColor: ColorManager.grey1,
     splashColor: ColorManager.lightPrimary,
+    scaffoldBackgroundColor: ColorManager.white,
     // ripple effect color
     // cardView theme
     cardTheme: CardTheme(
@@ -21,9 +22,9 @@ ThemeData getApplicationTheme() {
     // app bar theme
     appBarTheme: AppBarTheme(
         centerTitle: true,
-        color: ColorManager.primary,
-        elevation: AppSize.s4,
-        shadowColor: ColorManager.lightPrimary,
+        color: ColorManager.white,
+        elevation: AppSize.s0,
+        // shadowColor: ColorManager.lightPrimary,
         titleTextStyle:
             getRegularStyle(fontSize: FontSize.s16, color: ColorManager.white)),
     // button theme
@@ -33,7 +34,14 @@ ThemeData getApplicationTheme() {
         buttonColor: ColorManager.primary,
         splashColor: ColorManager.lightPrimary),
 
-    // elevated button them
+    // text button theme
+    textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+            foregroundColor: MaterialStatePropertyAll(ColorManager.primary),
+            textStyle: MaterialStatePropertyAll(getSemiBoldStyle(
+                color: ColorManager.primary, fontSize: FontSize.s16)))),
+
+    // elevated button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
             textStyle: getRegularStyle(
@@ -42,6 +50,9 @@ ThemeData getApplicationTheme() {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSize.s12)))),
 
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: ColorManager.white,
+    ),
     textTheme: TextTheme(
         displayLarge: getSemiBoldStyle(
             color: ColorManager.darkGrey, fontSize: FontSize.s16),
