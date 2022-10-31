@@ -23,26 +23,29 @@ class OnBoardingViewModel extends BaseViewModel
   @override
   void start() {
     _list = _getSliderData();
+    //init object
     _postDataToView();
   }
 
   @override
   int goNext() {
-    int nextIndex = ++_currentIndex;
-    if (nextIndex == _list.length) {
-      nextIndex = 0;
+    _currentIndex++;
+
+    if (_currentIndex == _list.length) {
+      _currentIndex = 0;
     }
-    return nextIndex;
+    return _currentIndex;
   }
 
   ///OnBoarding ViewModel Inputs
   @override
   int goPrevious() {
-    int previousIndex = --_currentIndex;
-    if (previousIndex == -1) {
-      previousIndex = _list.length - 1;
+    _currentIndex--;
+
+    if (_currentIndex == -1) {
+      _currentIndex = _list.length - 1;
     }
-    return previousIndex;
+    return _currentIndex;
   }
 
   @override
