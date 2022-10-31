@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frenzy_store/domain/models/onboarding_models.dart';
+import 'package:frenzy_store/presentation/onboarding/viewmodel/onboarding_viewmodel.dart';
 import 'package:frenzy_store/presentation/resources/assets_manger.dart';
 import 'package:frenzy_store/presentation/resources/color_manager.dart';
 import 'package:frenzy_store/presentation/resources/constant_manger.dart';
@@ -16,23 +18,32 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-  late final List<SliderObject> _list = _getSliderData();
-
   final PageController _controller = PageController();
-  int _currentPage = 0;
-  List<SliderObject> _getSliderData() => [
-        SliderObject(AppStrings.onBoardingTitle1,
-            AppStrings.onBoardingSubTitle1, ImageAssets.onBoardingLogo1),
-        SliderObject(AppStrings.onBoardingTitle2,
-            AppStrings.onBoardingSubTitle2, ImageAssets.onBoardingLogo2),
-        SliderObject(AppStrings.onBoardingTitle3,
-            AppStrings.onBoardingSubTitle3, ImageAssets.onBoardingLogo3),
-        SliderObject(AppStrings.onBoardingTitle4,
-            AppStrings.onBoardingSubTitle4, ImageAssets.onBoardingLogo4),
-      ];
+  final OnBoardingViewModel _viewModel = OnBoardingViewModel();
+
+  void _bind() {
+    _viewModel.start();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _bind();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<SliderViewObject>(
+        stream: _viewModel.outputSliderViewObject,
+        builder: (context, snapshot) {
+          return _getOnBoardingContent(snapshot.data);
+        });
+  }
+
+  Widget _getOnBoardingContent(SliderViewObject? sliderViewObject) {
+    if (sliderViewObject == null) {
+      return Container();
+    }
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -42,14 +53,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       ),
       body: PageView.builder(
           controller: _controller,
-          itemCount: _list.length,
+          itemCount: sliderViewObject.numOfSlides,
           onPageChanged: (index) {
-            setState(() {
-              _currentPage = index;
-            });
+            _viewModel.onPageChanged(index);
           },
           itemBuilder: (context, index) {
-            return OnBoardingPage(_list[index]);
+            return OnBoardingPage(sliderViewObject.sliderObject);
           }),
       bottomSheet: SizedBox(
         height: AppSize.s100,
@@ -66,14 +75,14 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 ),
               ),
             ),
-            Expanded(child: _getBottomSheetWidget())
+            Expanded(child: _getBottomSheetWidget(sliderViewObject))
           ],
         ),
       ),
     );
   }
 
-  Widget _getBottomSheetWidget() {
+  Widget _getBottomSheetWidget(SliderViewObject sliderViewObject) {
     return Container(
       margin: const EdgeInsets.all(AppPadding.p8),
       decoration: BoxDecoration(
@@ -85,7 +94,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         children: [
           GestureDetector(
             onTap: () {
-              _controller.animateToPage(goPrevious(),
+              _controller.animateToPage(_viewModel.goPrevious(),
                   duration: const Duration(
                       milliseconds: AppConstants.sliderAnimationTime),
                   curve: Curves.easeInOutExpo);
@@ -101,7 +110,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           ),
           Row(
             children: [
-              for (int i = 0; i < _list.length; i++)
+              for (int i = 0; i < sliderViewObject.numOfSlides; i++)
                 Padding(
                   padding: const EdgeInsets.all(AppPadding.p8),
                   child: GestureDetector(
@@ -111,13 +120,14 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                                 milliseconds: AppConstants.sliderAnimationTime),
                             curve: Curves.easeInOutExpo);
                       },
-                      child: _getProperCircle(i)),
+                      child:
+                          _getProperCircle(i, sliderViewObject.currentIndex)),
                 )
             ],
           ),
           GestureDetector(
             onTap: () {
-              _controller.animateToPage(goNext(),
+              _controller.animateToPage(_viewModel.goNext(),
                   duration: const Duration(
                       milliseconds: AppConstants.sliderAnimationTime),
                   curve: Curves.easeInOutExpo);
@@ -138,27 +148,17 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  Widget _getProperCircle(int index) {
-    if (index == _currentPage) {
+  Widget _getProperCircle(int index, int currentIndex) {
+    if (index == currentIndex) {
       return SvgPicture.asset(ImageAssets.hollowCircleIc);
     }
     return SvgPicture.asset(ImageAssets.solidCircleIc);
   }
 
-  int goNext() {
-    int nextIndex = ++_currentPage;
-    if (nextIndex == _list.length) {
-      nextIndex = 0;
-    }
-    return nextIndex;
-  }
-
-  int goPrevious() {
-    int previousIndex = --_currentPage;
-    if (previousIndex == -1) {
-      previousIndex = _list.length - 1;
-    }
-    return previousIndex;
+  @override
+  void dispose() {
+    super.dispose();
+    _viewModel.dispose();
   }
 }
 
@@ -197,12 +197,4 @@ class OnBoardingPage extends StatelessWidget {
       ],
     );
   }
-}
-
-class SliderObject {
-  final String title;
-  final String subtitle;
-  final String image;
-
-  SliderObject(this.title, this.subtitle, this.image);
 }

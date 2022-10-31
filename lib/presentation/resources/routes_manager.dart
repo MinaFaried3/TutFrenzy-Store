@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frenzy_store/presentation/forgot_password/forgot_password_vies.dart';
 import 'package:frenzy_store/presentation/login/login_view.dart';
 import 'package:frenzy_store/presentation/main/main_view.dart';
-import 'package:frenzy_store/presentation/onboarding/onboarding_view.dart';
+import 'package:frenzy_store/presentation/onboarding/view/onboarding_view.dart';
 import 'package:frenzy_store/presentation/register/register_view.dart';
 import 'package:frenzy_store/presentation/resources/strings_manager.dart';
 import 'package:frenzy_store/presentation/splash/splash_view.dart';
