@@ -25,14 +25,14 @@ class Contacts extends Equatable {
 }
 
 class Authentication extends Equatable {
-  final Customer customer;
-  final Contacts contacts;
+  final Customer? customer;
+  final Contacts? contacts;
 
   const Authentication({
-    required this.customer,
-    required this.contacts,
+    this.customer,
+    this.contacts,
   });
 
   @override
-  List<Object> get props => [customer, contacts];
+  List<Object?> get props => [customer, contacts];
 }
