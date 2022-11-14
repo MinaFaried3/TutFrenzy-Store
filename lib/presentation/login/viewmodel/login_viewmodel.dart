@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:frenzy_store/presentation/base/base_view_model.dart';
+import 'package:frenzy_store/presentation/common/freezed_data_class.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
@@ -8,6 +9,8 @@ class LoginViewModel extends BaseViewModel
       StreamController<bool>.broadcast();
   final StreamController _passwordStreamController =
       StreamController<bool>.broadcast();
+
+  var loginObject = LoginObject("", "");
 
   /// base
   @override
@@ -29,11 +32,13 @@ class LoginViewModel extends BaseViewModel
   @override
   setPassword(String password) {
     inputPassword.add(password);
+    loginObject = loginObject.copyWith(password: password);
   }
 
   @override
   setUserName(String userName) {
     inputUserName.add(userName);
+    loginObject = loginObject.copyWith(userName: userName);
   }
 
   @override
