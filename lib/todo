@@ -20,7 +20,7 @@ try turn execute to call in use case
 
 
 
-
+CLEAN ARCHITECTURE
 
 - build model in data layer
 - build http builder with use cases
@@ -31,3 +31,15 @@ try turn execute to call in use case
 - base repository in domain
 - error handler
 - repository in data layer
+- view model
+///-------------------------------------------------------------------------------------------------------------
+
+MVVM -> STREAM CONTROLLER
+
+- create base view model , inputs ,outputs
+- create module view model ,inputs ,outputs
+- inputs has => sink
+- outputs has => streams
+- main class override fun from base , input,outputs
+- create stream controller for every input-output
+- add initial events to each stream controller
