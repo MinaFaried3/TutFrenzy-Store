@@ -2,7 +2,9 @@ native splash screen
 animate and redesign onBoarding
 add text to on boarding screen
 Bad state: Stream has already been listened to. => on boarding screen
-
+make dio , shared preferences singleton => AppPreferences , DioFactory ,use cases
+make primary classes  singleton
+make all  classes  equatable
 
 
 

@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:frenzy_store/app/app_prefs.dart';
 import 'package:frenzy_store/app/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -9,7 +11,15 @@ const String accept = "accept";
 const String authorization = "authorization";
 const String defaultLanguage = "Language";
 
-class DioFactory {
+class DioFactory extends Equatable {
+  final AppPreferences _appPreferences;
+
+  const DioFactory(this._appPreferences);
+
+  Future<String> getLanguage() async {
+    return await _appPreferences.getAppLanguage();
+  }
+
   Future<Dio> getDio() async {
     final Dio dio = Dio();
 
@@ -17,7 +27,7 @@ class DioFactory {
       contentType: applicationJson,
       accept: applicationJson,
       authorization: Constants.token,
-      defaultLanguage: 'en',
+      defaultLanguage: await getLanguage(),
     };
 
     dio.options = BaseOptions(
@@ -37,4 +47,7 @@ class DioFactory {
 
     return dio;
   }
+
+  @override
+  List<Object> get props => [_appPreferences];
 }
