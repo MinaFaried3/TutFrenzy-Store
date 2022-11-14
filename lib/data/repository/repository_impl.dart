@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:frenzy_store/data/data_source/remote_data_source.dart';
 import 'package:frenzy_store/data/mappers/login_mappers.dart';
+import 'package:frenzy_store/data/network/error_handler.dart';
 import 'package:frenzy_store/data/network/failure.dart';
 import 'package:frenzy_store/data/network/network_info.dart';
 import 'package:frenzy_store/data/network/requests.dart';
@@ -16,16 +17,28 @@ class RepositoryImpl implements Repository {
   @override
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
+    // check the internet connection
     if (!(await networkInfo.isConnected)) {
-      return const Left(Failure(501, "please check your internet connection"));
+      return Left(DataSource.noInternetConnection.getFailure());
     }
 
-    final response = await remoteDataSource.login(loginRequest);
+    try {
+      // get response data
+      final response = await remoteDataSource.login(loginRequest);
 
-    if (response.status == 0) {
-      return Right(response.toDomain());
-    } else {
-      return Left(Failure(409, response.message ?? "business error message"));
+      // response status is 0 => success
+      if (response.status == ApiInternalStatus.success) {
+        return Right(response.toDomain());
+      }
+
+      // response status is 1 => fail
+      return Left(Failure(
+        ApiInternalStatus.failure,
+        response.message ?? DataSource.defaultState.message,
+      ));
+    } catch (error) {
+      // error from dio
+      return Left(ErrorHandler.handle(error).failure);
     }
   }
 }

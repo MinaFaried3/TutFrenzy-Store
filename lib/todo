@@ -2,3 +2,30 @@ native splash screen
 animate and redesign onBoarding
 add text to on boarding screen
 Bad state: Stream has already been listened to. => on boarding screen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- build model in data layer
+- build http builder with use cases
+- dio factory
+- remote data source
+- make model in domain layer with only necessary members
+- mapping model from data to domain
+- base repository in domain
+- error handler
+- repository in data layer

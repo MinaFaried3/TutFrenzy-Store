@@ -6,9 +6,9 @@ import '../presentation/resources/themes_manager.dart';
 class MyApp extends StatefulWidget {
   const MyApp._internal({Key? key}) : super(key: key);
 
-  static const MyApp _instance = MyApp._internal();
+  static const MyApp _singletonInstance = MyApp._internal();
 
-  factory MyApp() => _instance;
+  factory MyApp() => _singletonInstance;
 
   @override
   State<MyApp> createState() => _MyAppState();

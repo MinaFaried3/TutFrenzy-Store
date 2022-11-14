@@ -25,6 +25,7 @@ class Contacts extends Equatable {
 }
 
 class Authentication extends Equatable {
+  // notice here we didn't get the status code and message
   final Customer? customer;
   final Contacts? contacts;
 
