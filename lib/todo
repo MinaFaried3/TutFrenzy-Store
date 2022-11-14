@@ -6,7 +6,7 @@ make dio , shared preferences singleton => AppPreferences , DioFactory ,use case
 make primary classes  singleton
 make all  classes  equatable
 try turn execute to call in use case
-
+dark theme
 
 
 
@@ -43,3 +43,8 @@ MVVM -> STREAM CONTROLLER
 - main class override fun from base , input,outputs
 - create stream controller for every input-output
 - add initial events to each stream controller
+- freezed object
+- go to ui
+- bind to view model => start
+- init ,dispose
+- don't forget dispose streams
