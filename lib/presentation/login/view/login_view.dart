@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frenzy_store/app/dependency_injection.dart';
 import 'package:frenzy_store/presentation/login/viewmodel/login_viewmodel.dart';
 import 'package:frenzy_store/presentation/resources/assets_manger.dart';
 import 'package:frenzy_store/presentation/resources/color_manager.dart';
@@ -14,7 +15,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final LoginViewModel _viewModel = LoginViewModel();
+  final LoginViewModel _viewModel = getItInstance<LoginViewModel>();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();

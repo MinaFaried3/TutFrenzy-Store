@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frenzy_store/app/dependency_injection.dart';
 import 'package:frenzy_store/presentation/forgot_password/forgot_password_vies.dart';
 import 'package:frenzy_store/presentation/login/view/login_view.dart';
 import 'package:frenzy_store/presentation/main/main_view.dart';
@@ -24,6 +25,7 @@ class RouteGenerator {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
       case Routes.loginRoute:
+        initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.registerRoute:
         return MaterialPageRoute(builder: (_) => const RegisterView());
