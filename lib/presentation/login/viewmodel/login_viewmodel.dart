@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:frenzy_store/domain/usecase/login_usecase.dart';
 import 'package:frenzy_store/presentation/base/base_view_model.dart';
 import 'package:frenzy_store/presentation/common/freezed_data_class.dart';
 
@@ -16,9 +17,9 @@ class LoginViewModel extends BaseViewModel
 
   var loginObject = LoginObject("", "");
 
-  // final LoginUseCase _loginUseCase;
-  //
-  // LoginViewModel(this._loginUseCase);
+  final LoginUseCase _loginUseCase;
+
+  LoginViewModel(this._loginUseCase);
 
   /// base
   @override
@@ -68,10 +69,10 @@ class LoginViewModel extends BaseViewModel
 
   @override
   Future<void> login() async {
-    // final result = await _loginUseCase
-    //     .execute(LoginUseCaseInput(loginObject.userName, loginObject.password));
-    //
-    // result.fold((failure) {}, (data) {});
+    final result = await _loginUseCase
+        .execute(LoginUseCaseInput(loginObject.userName, loginObject.password));
+
+    result.fold((failure) {}, (data) {});
   }
 
   ///outputs

@@ -32,6 +32,17 @@ CLEAN ARCHITECTURE
 - error handler
 - repository in data layer
 - view model
+- get it dependency injection
+    - shared prefs
+    - app prefs
+    - dio
+    - app service client
+    - network info
+    - remote data source
+    - repository
+
+
+
 ///-------------------------------------------------------------------------------------------------------------
 
 MVVM -> STREAM CONTROLLER
