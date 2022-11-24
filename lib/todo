@@ -1,12 +1,14 @@
+check responsive
+dark theme
+
 native splash screen
 animate and redesign onBoarding
 add text to on boarding screen
 Bad state: Stream has already been listened to. => on boarding screen
-make dio , shared preferences singleton => AppPreferences , DioFactory ,use cases
-make primary classes  singleton
+use regex in register
 make all  classes  equatable
 try turn execute to call in use case
-dark theme
+
 
 
 
@@ -24,7 +26,7 @@ CLEAN ARCHITECTURE
 
 - build model in data layer
 - build http builder with use cases
-- dio factory
+- dio factory => add dio observer
 - remote data source
 - make model in domain layer with only necessary members
 - mapping model from data to domain

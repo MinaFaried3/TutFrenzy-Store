@@ -17,7 +17,7 @@ class AppStrings {
   static const login = "login button";
   static const forgetPassword = "forgot password";
   static const registerText = "Sign up";
-  static const loading = "loading";
+  static const loading = "loading....";
   static const retryAgain = "retry again";
   static const ok = "ok";
   static const String emailHint = 'email hint';
