@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frenzy_store/app/constants.dart';
+import 'package:frenzy_store/presentation/resources/assets_manger.dart';
 import 'package:frenzy_store/presentation/resources/color_manager.dart';
 import 'package:frenzy_store/presentation/resources/font_manager.dart';
 import 'package:frenzy_store/presentation/resources/strings_manager.dart';
 import 'package:frenzy_store/presentation/resources/style_manager.dart';
 import 'package:frenzy_store/presentation/resources/values_manager.dart';
+import 'package:lottie/lottie.dart';
 
 enum StateRenderType {
   ///popup state (dialog)
@@ -43,28 +45,28 @@ class StateRender extends StatelessWidget {
     switch (stateRenderType) {
       case StateRenderType.popupLoadingState:
         return _getPopupDialog(context, [
-          _getAnimatedImage(),
+          _getAnimatedImage(JsonAssets.loading),
         ]);
       case StateRenderType.popupErrorState:
         return _getPopupDialog(context, [
-          _getAnimatedImage(),
+          _getAnimatedImage(JsonAssets.error),
           _getTitle(message),
           _getButtonState(AppStrings.ok, context),
         ]);
       case StateRenderType.fullScreenLoadingState:
         return _getStateItems([
-          _getAnimatedImage(),
+          _getAnimatedImage(JsonAssets.loading),
           _getTitle(message),
         ]);
       case StateRenderType.fullScreenErrorState:
         return _getStateItems([
-          _getAnimatedImage(),
+          _getAnimatedImage(JsonAssets.error),
           _getTitle(message),
           _getButtonState(AppStrings.retryAgain, context),
         ]);
       case StateRenderType.fullScreenEmptyState:
         return _getStateItems([
-          _getAnimatedImage(),
+          _getAnimatedImage(JsonAssets.empty),
           _getTitle(message),
         ]);
       case StateRenderType.contentState:
@@ -108,11 +110,11 @@ class StateRender extends StatelessWidget {
     );
   }
 
-  Widget _getAnimatedImage() {
+  Widget _getAnimatedImage(String animationPath) {
     return SizedBox(
       width: AppSize.s100,
       height: AppSize.s100,
-      child: Container(),
+      child: Lottie.asset(animationPath),
     );
   }
 
