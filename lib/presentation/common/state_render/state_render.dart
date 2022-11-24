@@ -22,13 +22,13 @@ enum StateRenderType {
   contentState
 }
 
-class StateRender extends StatelessWidget {
+class StateRenderer extends StatelessWidget {
   final StateRenderType stateRenderType;
   final String message;
   final String title;
   final Function retryAction;
 
-  const StateRender(
+  const StateRenderer(
       {Key? key,
       required this.stateRenderType,
       this.message = AppStrings.loading,
