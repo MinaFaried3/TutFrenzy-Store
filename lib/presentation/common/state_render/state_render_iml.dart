@@ -86,11 +86,11 @@ class ContentState extends FlowState {
 }
 
 extension FlowStateExtension on FlowState {
-  Widget getScreenWidget(
-    BuildContext context,
-    Widget contentWidget,
-    Function retryAction,
-  ) {
+  Widget getScreenWidget({
+    required BuildContext context,
+    required Widget contentWidget,
+    required Function retryAction,
+  }) {
     switch (runtimeType) {
       case LoadingState:
         if (stateRenderType == StateRenderType.popupLoadingState) {

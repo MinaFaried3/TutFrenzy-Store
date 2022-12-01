@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:frenzy_store/domain/usecase/login_usecase.dart';
 import 'package:frenzy_store/presentation/base/base_view_model.dart';
 import 'package:frenzy_store/presentation/common/freezed_data_class.dart';
+import 'package:frenzy_store/presentation/common/state_render/state_render_iml.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
@@ -23,10 +24,14 @@ class LoginViewModel extends BaseViewModel
 
   /// base
   @override
-  void start() {}
+  void start() {
+    //show content state
+    inputState.add(ContentState());
+  }
 
   @override
   void dispose() {
+    super.dispose();
     _userNameStreamController.close();
     _passwordStreamController.close();
     _areAllInputsValidStreamController.close();
