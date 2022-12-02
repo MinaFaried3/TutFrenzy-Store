@@ -6,9 +6,9 @@ import 'package:frenzy_store/data/network/failure.dart';
 import 'package:frenzy_store/data/network/network_info.dart';
 import 'package:frenzy_store/data/network/requests.dart';
 import 'package:frenzy_store/domain/models/login_model.dart';
-import 'package:frenzy_store/domain/repository/repository.dart';
 
 import '../../app/constants.dart';
+import '../../domain/repository/repository.dart';
 
 class RepositoryImpl implements Repository {
   final RemoteDataSource remoteDataSource;
@@ -41,7 +41,6 @@ class RepositoryImpl implements Repository {
     } catch (error) {
       // error from dio
       printK("error ------------------------------------- ${error.toString()}");
-      // return Left(ErrorHandler.handle(error).failure);
       return Left(ErrorHandler.handle(error).failure);
     }
   }

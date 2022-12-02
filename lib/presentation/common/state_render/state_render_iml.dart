@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frenzy_store/app/constants.dart';
 import 'package:frenzy_store/presentation/common/state_render/state_render.dart';
