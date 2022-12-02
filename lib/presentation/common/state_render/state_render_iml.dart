@@ -132,7 +132,7 @@ extension FlowStateExtension on FlowState {
   }
 
   bool _isCurrentDialogShowing(BuildContext context) =>
-      ModalRoute.of(context)?.isCurrent == false;
+      (ModalRoute.of(context)!.isCurrent) == false;
 
   void _dismissDialog(BuildContext context) {
     if (_isCurrentDialogShowing(context)) {

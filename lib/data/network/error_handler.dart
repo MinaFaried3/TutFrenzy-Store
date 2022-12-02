@@ -30,8 +30,8 @@ Failure handleError(DioError error) {
           error.response?.statusCode != null &&
           error.response?.statusMessage != null) {
         return Failure(
-          error.response!.statusCode!,
-          error.response!.statusMessage!,
+          error.response?.statusCode ?? 0,
+          error.response?.statusMessage ?? '',
         );
       }
 

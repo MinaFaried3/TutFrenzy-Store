@@ -21,7 +21,6 @@ class DioFactory extends Equatable {
   }
 
   Future<Dio> getDio() async {
-    //TODO make it singleton
     final Dio dio = Dio();
 
     Map<String, String> headers = {

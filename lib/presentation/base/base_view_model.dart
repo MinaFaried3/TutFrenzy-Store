@@ -4,20 +4,20 @@ import 'package:frenzy_store/presentation/common/state_render/state_render_iml.d
 
 abstract class BaseViewModel extends BaseViewModelInputs
     with BaseViewModelOutputs {
-  final StreamController _inoutStateStreamController =
+  final StreamController _inputStateStreamController =
       StreamController<FlowState>.broadcast();
 
   @override
   void dispose() {
-    _inoutStateStreamController.close();
+    _inputStateStreamController.close();
   }
 
   @override
-  Sink get inputState => _inoutStateStreamController.sink;
+  Sink get inputState => _inputStateStreamController.sink;
 
   @override
   Stream<FlowState> get outputState =>
-      _inoutStateStreamController.stream.map((flowState) => flowState);
+      _inputStateStreamController.stream.map((flowState) => flowState);
 }
 
 abstract class BaseViewModelInputs {

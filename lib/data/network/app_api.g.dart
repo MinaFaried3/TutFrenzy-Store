@@ -45,7 +45,13 @@ class _AppServiceClient implements AppServiceClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    // final result = await _dio.post(
+    //   '/customers/login',
+    //   data: _data,
+    //   queryParameters: queryParameters,
+    // );
     final value = AuthenticationResponse.fromJson(_result.data!);
+    printK("value is -------------------------------- ${_result.data}");
     return value;
   }
 

@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:frenzy_store/app/constants.dart';
 import 'package:frenzy_store/domain/usecase/login_usecase.dart';
 import 'package:frenzy_store/presentation/base/base_view_model.dart';
 import 'package:frenzy_store/presentation/common/freezed_data_class.dart';
+import 'package:frenzy_store/presentation/common/state_render/state_render.dart';
 import 'package:frenzy_store/presentation/common/state_render/state_render_iml.dart';
 
 class LoginViewModel extends BaseViewModel
@@ -15,6 +17,9 @@ class LoginViewModel extends BaseViewModel
       StreamController<void>.broadcast();
   final StreamController _showHidePasswordStreamController =
       StreamController<bool>.broadcast();
+
+  final StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<bool>();
 
   var loginObject = LoginObject("", "");
 
@@ -36,6 +41,7 @@ class LoginViewModel extends BaseViewModel
     _passwordStreamController.close();
     _areAllInputsValidStreamController.close();
     _showHidePasswordStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
   }
 
   /// inputs
@@ -74,10 +80,26 @@ class LoginViewModel extends BaseViewModel
 
   @override
   Future<void> login() async {
+    //1 - start loading popup state
+    inputState.add(
+        const LoadingState(stateRenderType: StateRenderType.popupLoadingState));
+    //2 - getting the data
     final result = await _loginUseCase
         .execute(LoginUseCaseInput(loginObject.userName, loginObject.password));
+    //3- final result
+    result.fold((failure) {
+      //show error state
+      printK("failure is here {{{ ${failure.message} }}}");
+      inputState.add(ErrorState(
+          stateRenderType: StateRenderType.popupErrorState,
+          message: failure.message));
+    }, (data) {
+      printK("data is here {{{ ${data.contacts} }}}");
+      inputState.add(ContentState());
 
-    result.fold((failure) {}, (data) {});
+      //4- navigate to main screen
+      isUserLoggedInSuccessfullyStreamController.add(true);
+    });
   }
 
   ///outputs
