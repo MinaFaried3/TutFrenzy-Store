@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frenzy_store/app/app_prefs.dart';
+import 'package:frenzy_store/app/dependency_injection.dart';
 import 'package:frenzy_store/domain/models/onboarding_models.dart';
 import 'package:frenzy_store/presentation/onboarding/viewmodel/onboarding_viewmodel.dart';
 import 'package:frenzy_store/presentation/resources/assets_manger.dart';
@@ -20,8 +22,10 @@ class OnBoardingView extends StatefulWidget {
 class _OnBoardingViewState extends State<OnBoardingView> {
   final PageController _controller = PageController();
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
+  final AppPreferences _appPreferences = getItInstance<AppPreferences>();
 
   void _bind() {
+    _appPreferences.setOnBoardingScreenViewed();
     _viewModel.start();
   }
 

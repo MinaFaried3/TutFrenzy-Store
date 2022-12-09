@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const String languageKey = "language";
 const String onBoardingViewedKey = "onBoardingViewed";
-const String isUserLoggedIn = "userLoggedin";
+const String isUserLoggedInKey = "userLoggedIn";
 
 class AppPreferences extends Equatable {
   final SharedPreferences _sharedPreferences;
@@ -27,17 +27,18 @@ class AppPreferences extends Equatable {
     _sharedPreferences.setBool(onBoardingViewedKey, true);
   }
 
-  Future<bool> getOnBoardingScreenViewed() async {
+  Future<bool> isOnBoardingScreenViewed() async {
+    // if key null return false
     return _sharedPreferences.getBool(onBoardingViewedKey) ?? false;
   }
 
   //login
   Future<void> setUserLoggedIn() async {
-    _sharedPreferences.setBool(isUserLoggedIn, true);
+    _sharedPreferences.setBool(isUserLoggedInKey, true);
   }
 
-  Future<bool> getUserLoggedIn() async {
-    return _sharedPreferences.getBool(isUserLoggedIn) ?? false;
+  Future<bool> isUserLoggedIn() async {
+    return _sharedPreferences.getBool(isUserLoggedInKey) ?? false;
   }
 
   @override

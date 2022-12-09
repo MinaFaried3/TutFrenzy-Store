@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:frenzy_store/app/app_prefs.dart';
 import 'package:frenzy_store/app/dependency_injection.dart';
 import 'package:frenzy_store/presentation/common/state_render/state_render_iml.dart';
 import 'package:frenzy_store/presentation/login/viewmodel/login_viewmodel.dart';
@@ -21,6 +22,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final AppPreferences _appPreferences = getItInstance<AppPreferences>();
 
   void _bind() {
     _viewModel.start();
@@ -32,6 +34,7 @@ class _LoginViewState extends State<LoginView> {
         .listen((isLoggedIn) {
       if (isLoggedIn) {
         SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          _appPreferences.setUserLoggedIn();
           Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
         });
       }
