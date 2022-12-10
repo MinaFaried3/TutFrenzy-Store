@@ -84,8 +84,8 @@ class LoginViewModel extends BaseViewModel
     inputState.add(
         const LoadingState(stateRenderType: StateRenderType.popupLoadingState));
     //2 - getting the data
-    final result = await _loginUseCase
-        .execute(LoginUseCaseInput(loginObject.userName, loginObject.password));
+    final result = await _loginUseCase(
+        LoginUseCaseInput(loginObject.userName, loginObject.password));
     //3- final result
     result.fold((failure) {
       //show error state

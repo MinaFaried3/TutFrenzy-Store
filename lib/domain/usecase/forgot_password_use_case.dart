@@ -13,11 +13,6 @@ class ForgotPasswordUseCase
   ForgotPasswordUseCase(this._repository);
 
   @override
-  Future<Either<Failure, ForgotPassword>> execute(
-      ForgotPasswordInput input) async {
-    return await _repository.forgotPassword(ForgotPasswordRequest(input.email));
-  }
-
   Future<Either<Failure, ForgotPassword>> call(
       ForgotPasswordInput input) async {
     return await _repository.forgotPassword(ForgotPasswordRequest(input.email));

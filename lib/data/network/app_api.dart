@@ -7,10 +7,13 @@ import '../response/responses.dart';
 
 part 'app_api.g.dart';
 
+// flutter pub run build_runner build --delete-conflicting-outputs
+
 // api end points
 const String customers = "/customers";
 const String loginEndPoint = "$customers/login";
 const String forgotPasswordEndPoint = "$customers/forgotPassword";
+const String registerEndPoint = "$customers/register";
 
 @RestApi(baseUrl: Constants.baseUrl)
 abstract class AppServiceClient {
@@ -22,4 +25,14 @@ abstract class AppServiceClient {
 
   @POST(forgotPasswordEndPoint)
   Future<ForgotPasswordResponse> forgotPassword(@Field("email") String email);
+
+  @POST(registerEndPoint)
+  Future<AuthenticationResponse> register(
+    @Field("user_name") String userName,
+    @Field("country_mobile_code") String countryMobileCode,
+    @Field("mobile_number") String mobileNumber,
+    @Field("email") String email,
+    @Field("password") String password,
+    @Field("profile_picture") String profile,
+  );
 }

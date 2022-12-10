@@ -4,7 +4,7 @@ import 'package:frenzy_store/presentation/forgot_password/view/forgot_password_v
 import 'package:frenzy_store/presentation/login/view/login_view.dart';
 import 'package:frenzy_store/presentation/main/main_view.dart';
 import 'package:frenzy_store/presentation/onboarding/view/onboarding_view.dart';
-import 'package:frenzy_store/presentation/register/register_view.dart';
+import 'package:frenzy_store/presentation/register/view/register_view.dart';
 import 'package:frenzy_store/presentation/resources/strings_manager.dart';
 import 'package:frenzy_store/presentation/splash/splash_view.dart';
 import 'package:frenzy_store/presentation/store_details/store_details_view.dart';

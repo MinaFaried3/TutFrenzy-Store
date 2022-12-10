@@ -73,4 +73,33 @@ class RepositoryImpl implements Repository {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
+
+  @override
+  Future<Either<Failure, Authentication>> register(
+      RegisterRequest registerRequest) async {
+    // check the internet connection
+    if (!(await networkInfo.isConnected)) {
+      return Left(DataSource.noInternetConnection.getFailure());
+    }
+
+    try {
+      // get response data
+      final response = await remoteDataSource.register(registerRequest);
+      printK("response is ---------------------- ${response.customer?.name}");
+      // response status is 0 => success
+      if (response.status == ApiInternalStatus.success) {
+        return Right(response.toDomain());
+      } else {
+        // response status is 1 => fail
+        return Left(Failure(
+          ApiInternalStatus.failure,
+          response.message ?? DataSource.defaultState.message,
+        ));
+      }
+    } catch (error) {
+      // error from dio
+      printK("error ------------------------------------- ${error.toString()}");
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
 }
