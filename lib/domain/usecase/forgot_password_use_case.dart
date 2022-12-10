@@ -17,6 +17,11 @@ class ForgotPasswordUseCase
       ForgotPasswordInput input) async {
     return await _repository.forgotPassword(ForgotPasswordRequest(input.email));
   }
+
+  Future<Either<Failure, ForgotPassword>> call(
+      ForgotPasswordInput input) async {
+    return await _repository.forgotPassword(ForgotPasswordRequest(input.email));
+  }
 }
 
 class ForgotPasswordInput extends Equatable {
