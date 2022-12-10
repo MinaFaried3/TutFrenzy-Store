@@ -1,10 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:frenzy_store/data/data_source/remote_data_source.dart';
+import 'package:frenzy_store/data/mappers/forgot_password_mappers.dart';
 import 'package:frenzy_store/data/mappers/login_mappers.dart';
 import 'package:frenzy_store/data/network/error_handler.dart';
 import 'package:frenzy_store/data/network/failure.dart';
 import 'package:frenzy_store/data/network/network_info.dart';
 import 'package:frenzy_store/data/network/requests.dart';
+import 'package:frenzy_store/domain/models/forgot_password_model.dart';
 import 'package:frenzy_store/domain/models/login_model.dart';
 
 import '../../app/constants.dart';
@@ -38,6 +40,33 @@ class RepositoryImpl implements Repository {
           response.message ?? DataSource.defaultState.message,
         ));
       }
+    } catch (error) {
+      // error from dio
+      printK("error ------------------------------------- ${error.toString()}");
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, ForgotPassword>> forgotPassword(
+      ForgotPasswordRequest forgotPasswordRequest) async {
+    // check the internet connection
+    if (!(await networkInfo.isConnected)) {
+      return Left(DataSource.noInternetConnection.getFailure());
+    }
+
+    try {
+      final response =
+          await remoteDataSource.forgotPassword(forgotPasswordRequest);
+
+      if (response.status == ApiInternalStatus.success) {
+        return Right(response.toDomain());
+      }
+
+      return Left(Failure(
+        ApiInternalStatus.failure,
+        response.message ?? DataSource.defaultState.message,
+      ));
     } catch (error) {
       // error from dio
       printK("error ------------------------------------- ${error.toString()}");

@@ -6,6 +6,7 @@ import 'package:frenzy_store/data/network/dio_factory.dart';
 import 'package:frenzy_store/data/network/network_info.dart';
 import 'package:frenzy_store/data/repository/repository_impl.dart';
 import 'package:frenzy_store/domain/repository/repository.dart';
+import 'package:frenzy_store/domain/usecase/forgot_password_use_case.dart';
 import 'package:frenzy_store/domain/usecase/login_usecase.dart';
 import 'package:frenzy_store/presentation/login/viewmodel/login_viewmodel.dart';
 import 'package:get_it/get_it.dart';
@@ -57,5 +58,16 @@ void initLoginModule() {
     //view model
     getItInstance.registerFactory<LoginViewModel>(
         () => LoginViewModel(getItInstance<LoginUseCase>()));
+  }
+}
+
+void initForgotPasswordModule() {
+  if (!GetIt.I.isRegistered<ForgotPasswordUseCase>()) {
+    //use case
+    getItInstance.registerFactory<ForgotPasswordUseCase>(
+        () => ForgotPasswordUseCase(getItInstance<Repository>()));
+    // //view model
+    // getItInstance.registerFactory<LoginViewModel>(
+    //         () => LoginViewModel(getItInstance<LoginUseCase>()));
   }
 }
