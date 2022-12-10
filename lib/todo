@@ -28,14 +28,19 @@ error state in success the bug not in flow state
 
 CLEAN ARCHITECTURE
 
-- build model in data layer
-- build http builder with use cases
-- dio factory => add dio observer
-- remote data source
-- make model in domain layer with only necessary members
-- mapping model from data to domain
-- base repository in domain
+- state renderer
 - error handler
+- build model response in data layer
+- build http builder (app service client) with use cases
+- create model entity in domain layer with only necessary members
+- dio factory => add dio observer
+- class with needed parameters in requests
+- remote data source
+- mapping model from data to domain
+- base use case
+- base repository in domain
+- main use case
+- class with inputs in main use case
 - repository in data layer
 - view model
 - get it dependency injection
@@ -46,6 +51,7 @@ CLEAN ARCHITECTURE
     - network info
     - remote data source
     - repository
+    - every use case view model
 
 
 
@@ -54,14 +60,20 @@ CLEAN ARCHITECTURE
 MVVM -> STREAM CONTROLLER
 
 - create base view model , inputs ,outputs
+- create sink ,stream , stream controller of state flow in app
 - create module view model ,inputs ,outputs
-- inputs has => sink
-- outputs has => streams
+- inputs has => sink and logic method came from ui
+- outputs has => streams of final shape of data
 - main class override fun from base , input,outputs
 - create stream controller for every input-output
+- super.dispose and cancel all stream controller in dispose method
+- start => add content state to sink state from base class and notice on boarding example
+- override sink,streams
 - add initial events to each stream controller
 - freezed object
+- control stream and add events to sink using logic methods from input class and copyWith freezed object
 - go to ui
-- bind to view model => start
-- init ,dispose
-- don't forget dispose streams
+- bind to view model => start , add listener to controllers by logic input methods
+- add bind to init ,and dispose to dispose
+- stream builder flow state
+- stream builder for every input
