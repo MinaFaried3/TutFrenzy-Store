@@ -52,6 +52,7 @@ CLEAN ARCHITECTURE
     - remote data source
     - repository
     - every use case view model
+- add dependency injection module before open view
 
 
 
