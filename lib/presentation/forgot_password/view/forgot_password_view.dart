@@ -69,55 +69,66 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   }
 
   Widget _getWidgetContent() {
-    return Center(
-      child: Form(
-        key: _key,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p28),
-            child: Column(
-              children: [
-                /// logo
-                const Center(
-                  child: Image(
-                    image: AssetImage(ImageAssets.splashLogo),
-                  ),
+    return Form(
+      key: _key,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: AppPadding.p28,
+              right: AppPadding.p28,
+              top: AppPadding.p100),
+          child: Column(
+            children: [
+              /// logo
+              const Center(
+                child: Image(
+                  image: AssetImage(ImageAssets.splashLogo),
                 ),
-                const SizedBox(height: AppSize.s28),
+              ),
+              const SizedBox(height: AppSize.s28),
 
-                /// email text
-                StreamBuilder<bool>(
-                  stream: _viewModel.outIsEmailValid,
-                  builder: (context, snapshot) {
-                    return TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                          hintText: AppStrings.email,
-                          labelText: AppStrings.email,
-                          errorText: (snapshot.data ?? true)
-                              ? null
-                              : AppStrings.invalidEmail),
-                    );
-                  },
-                ),
-                const SizedBox(height: AppSize.s28),
-
-                /// forgotPassword button
-                StreamBuilder<bool>(
-                    stream: _viewModel.outputAreAllInputsValid,
+              /// email text
+              Column(
+                children: [
+                  StreamBuilder<bool>(
+                    stream: _viewModel.outIsEmailValid,
                     builder: (context, snapshot) {
-                      return ElevatedButton(
-                        onPressed: (snapshot.data ?? false)
-                            ? () {
-                                _viewModel.forgotPassword();
-                              }
-                            : null,
-                        child: const Text(AppStrings.forgetPassword),
+                      return TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                            hintText: AppStrings.email,
+                            labelText: AppStrings.email,
+                            errorText: (snapshot.data ?? true)
+                                ? null
+                                : AppStrings.invalidEmail),
                       );
-                    })
-              ],
-            ),
+                    },
+                  ),
+                  const SizedBox(height: AppSize.s28),
+
+                  /// forgotPassword button
+                  StreamBuilder<bool>(
+                      stream: _viewModel.outputAreAllInputsValid,
+                      builder: (context, snapshot) {
+                        return SizedBox(
+                          width: double.infinity,
+                          height: AppSize.s40,
+                          child: ElevatedButton(
+                            onPressed: (snapshot.data ?? false)
+                                ? () {
+                                    _viewModel.forgotPassword();
+                                  }
+                                : null,
+                            child: const Text(AppStrings.forgetPassword),
+                          ),
+                        );
+                      }),
+                ],
+              ),
+
+              // const SizedBox(height: double.infinity),
+            ],
           ),
         ),
       ),
