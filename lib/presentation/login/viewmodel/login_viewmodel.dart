@@ -95,7 +95,9 @@ class LoginViewModel extends BaseViewModel
           message: failure.message));
     }, (data) {
       printK("data is here {{{ ${data.contacts} }}}");
-      inputState.add(ContentState());
+      inputState.add(SuccessState(
+          stateRenderType: StateRenderType.popupSuccessState,
+          message: "welcome ${data.customer?.name ?? ""}"));
 
       //4- navigate to main screen
       isUserLoggedInSuccessfullyStreamController.add(true);

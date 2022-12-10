@@ -10,7 +10,7 @@ make all  classes  equatable
 try turn execute to call in use case
 try using dismiss dialog in all function before switch in state_render_impl
 animated drawer from ismail
-add message state to stateRenderer and use if in forgot password screen and remove error state in success in view model
+
 
 
 priority bugs

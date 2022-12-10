@@ -54,6 +54,27 @@ class ErrorState extends FlowState {
   List<Object> get props => [_message, _stateRenderType];
 }
 
+// success state
+class SuccessState extends FlowState {
+  final String _message;
+  final StateRenderType _stateRenderType;
+
+  const SuccessState(
+      {String message = AppStrings.loading,
+      required StateRenderType stateRenderType})
+      : _message = message,
+        _stateRenderType = stateRenderType;
+
+  @override
+  String get message => _message;
+
+  @override
+  StateRenderType get stateRenderType => _stateRenderType;
+
+  @override
+  List<Object> get props => [_message, _stateRenderType];
+}
+
 // empty only full screen
 
 class EmptyState extends FlowState {
@@ -116,6 +137,13 @@ extension FlowStateExtension on FlowState {
               message: message,
               retryAction: retryAction);
         }
+      case SuccessState:
+        _dismissDialog(context);
+        // popup
+        showPopup(context, stateRenderType, message);
+        // behind popup
+        return contentWidget;
+
       case EmptyState:
         return StateRenderer(
             stateRenderType: stateRenderType,
