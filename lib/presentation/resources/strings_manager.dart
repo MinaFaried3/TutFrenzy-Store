@@ -21,7 +21,8 @@ class AppStrings {
   static const retryAgain = "retry again";
   static const ok = "ok";
   static const String emailHint = 'email hint';
-  static const String invalidEmail = "email error";
+  static const String email = 'email';
+  static const String invalidEmail = "invalid email";
   static const String resetPassword = "reset password";
   static const String success = "success";
   static const String userNameInvalid = "username hint message";
