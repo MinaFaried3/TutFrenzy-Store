@@ -25,9 +25,9 @@ class AppStrings {
   static const String invalidEmail = "invalid email";
   static const String resetPassword = "reset password";
   static const String success = "success";
-  static const String userNameInvalid = "username hint message";
-  static const String mobileNumberInvalid = "mobile number hint message";
-  static const String passwordInvalid = "password hint message";
+  static const String userNameInvalid = "User Name should be at least 5 chars";
+  static const String mobileNumberInvalid = "invalid mobile number ";
+  static const String passwordInvalid = "invalid password";
   static const String alreadyHaveAccount = "already have account";
   static const register = "register";
   static const mobileNumber = "mobile_number_hint";
