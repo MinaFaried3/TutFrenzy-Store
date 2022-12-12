@@ -2,13 +2,16 @@ import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frenzy_store/app/app_prefs.dart';
 import 'package:frenzy_store/app/constants.dart';
 import 'package:frenzy_store/app/dependency_injection.dart';
 import 'package:frenzy_store/presentation/common/state_render/state_render_iml.dart';
 import 'package:frenzy_store/presentation/register/viewmodel/register_viewmodel.dart';
 import 'package:frenzy_store/presentation/resources/assets_manger.dart';
 import 'package:frenzy_store/presentation/resources/color_manager.dart';
+import 'package:frenzy_store/presentation/resources/routes_manager.dart';
 import 'package:frenzy_store/presentation/resources/strings_manager.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -24,13 +27,13 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   final RegisterViewModel _viewModel = getItInstance<RegisterViewModel>();
   final ImagePicker _imagePicker = getItInstance<ImagePicker>();
+  final AppPreferences _appPreferences = getItInstance<AppPreferences>();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
-  final String initCountryMobileCode = '+20';
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-
+  final String initCountryMobileCode = '+20';
   void _bind() {
     _viewModel.start();
     _userNameController.addListener(() {
@@ -46,6 +49,15 @@ class _RegisterViewState extends State<RegisterView> {
       _viewModel.setMobileNumber(_mobileController.text);
     });
     _viewModel.setCountryMobileCode(initCountryMobileCode);
+    _viewModel.isUserRegisteredSuccessfullyStreamController.stream
+        .listen((isRegistered) {
+      if (isRegistered) {
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          _appPreferences.setUserLoggedIn();
+          Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+        });
+      }
+    });
   }
 
   @override
