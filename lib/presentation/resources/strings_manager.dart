@@ -31,7 +31,7 @@ class AppStrings {
   static const String alreadyHaveAccount = "already have account";
   static const register = "register";
   static const mobileNumber = "mobile_number_hint";
-  static const profilePicture = "upload_profile_picture";
+  static const profilePicture = "profile picture";
   static const photoGallery = "photo_from_galley";
   static const photoCamera = "photo_from_camera";
   static const home = "home";
