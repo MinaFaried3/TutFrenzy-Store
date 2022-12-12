@@ -11,6 +11,7 @@ import 'package:frenzy_store/presentation/resources/assets_manger.dart';
 import 'package:frenzy_store/presentation/resources/color_manager.dart';
 import 'package:frenzy_store/presentation/resources/routes_manager.dart';
 import 'package:frenzy_store/presentation/resources/strings_manager.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../resources/values_manager.dart';
 
@@ -23,6 +24,7 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   final RegisterViewModel _viewModel = getItInstance<RegisterViewModel>();
+  final ImagePicker _imagePicker = getItInstance<ImagePicker>();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -295,5 +297,41 @@ class _RegisterViewState extends State<RegisterView> {
     }
   }
 
-  void _showPicker(BuildContext context) {}
+  void _showPicker(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: Wrap(
+              children: [
+                ListTile(
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  leading: const Icon(Icons.photo_size_select_actual_outlined),
+                  title: const Text(AppStrings.photoGallery),
+                  onTap: () async {
+                    await _imageFrom(ImageSource.gallery);
+                    if (!mounted) return;
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  leading: const Icon(Icons.camera_outlined),
+                  title: const Text(AppStrings.photoCamera),
+                  onTap: () async {
+                    await _imageFrom(ImageSource.camera);
+                    if (!mounted) return;
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  Future<void> _imageFrom(ImageSource imageSource) async {
+    final XFile? image = await _imagePicker.pickImage(source: imageSource);
+    _viewModel.setProfile(File(image?.path ?? ""));
+  }
 }
