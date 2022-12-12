@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frenzy_store/app/constants.dart';
 import 'package:frenzy_store/app/dependency_injection.dart';
 import 'package:frenzy_store/presentation/common/state_render/state_render_iml.dart';
 import 'package:frenzy_store/presentation/register/viewmodel/register_viewmodel.dart';
@@ -120,15 +124,52 @@ class _RegisterViewState extends State<RegisterView> {
                           Expanded(
                               flex: 1,
                               child: CountryCodePicker(
+                                onChanged: (country) {
+                                  _viewModel.setCountryMobileCode(
+                                      country.code ?? Constants.token);
+                                },
                                 initialSelection: '+20',
                                 favorite: const ['+39', 'FR', '+966'],
                                 showCountryOnly: true,
                                 hideMainText: true,
                                 showOnlyCountryWhenClosed: true,
-                              ))
+                              )),
+                          Expanded(
+                            flex: 4,
+                            child: StreamBuilder<String?>(
+                                stream: _viewModel.outputErrorMobileNumber,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    keyboardType: TextInputType.phone,
+                                    controller: _mobileController,
+                                    decoration: InputDecoration(
+                                      hintText: AppStrings.mobileNumber,
+                                      labelText: AppStrings.mobileNumber,
+                                      errorText: snapshot.data,
+                                    ),
+                                  );
+                                }),
+                          ),
                         ],
                       ),
                     ),
+                    const SizedBox(height: AppSize.s18),
+
+                    ///email
+                    StreamBuilder<String?>(
+                        stream: _viewModel.outputErrorEmail,
+                        builder: (context, snapshot) {
+                          return TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                              hintText: AppStrings.emailHint,
+                              labelText: AppStrings.emailHint,
+                              errorText: snapshot.data,
+                            ),
+                          );
+                        }),
+                    const SizedBox(height: AppSize.s18),
 
                     ///password text
                     StreamBuilder<String?>(
@@ -167,7 +208,26 @@ class _RegisterViewState extends State<RegisterView> {
                         }),
                     const SizedBox(height: AppSize.s18),
 
-                    /// login button
+                    ///profile field
+
+                    const SizedBox(height: AppSize.s28),
+                    SizedBox(
+                      height: AppSize.s40,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          color: ColorManager.lightGrey,
+                        )),
+                        child: GestureDetector(
+                          child: _getMediaWidget(),
+                          onTap: () {
+                            _showPicker(context);
+                          },
+                        ),
+                      ),
+                    ),
+
+                    /// register button
                     StreamBuilder<bool>(
                         stream: _viewModel.outputAreAllInputsValid,
                         builder: (context, snapshot) {
@@ -206,4 +266,34 @@ class _RegisterViewState extends State<RegisterView> {
           ),
         ));
   }
+
+  Widget _getMediaWidget() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Flexible(child: Text(AppStrings.profilePicture)),
+          Flexible(
+              child: StreamBuilder<File>(
+            stream: _viewModel.outputIsProfile,
+            builder: (context, snapshot) {
+              return _imagePicket(snapshot.data);
+            },
+          )),
+          Flexible(child: SvgPicture.asset(ImageAssets.photoCameraIc))
+        ],
+      ),
+    );
+  }
+
+  Widget _imagePicket(File? image) {
+    if (image != null && image.path.isNotEmpty) {
+      return Image.file(image);
+    } else {
+      return const SizedBox();
+    }
+  }
+
+  void _showPicker(BuildContext context) {}
 }
