@@ -28,6 +28,7 @@ class _RegisterViewState extends State<RegisterView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
+  final String initCountryMobileCode = '+20';
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   void _bind() {
@@ -44,6 +45,7 @@ class _RegisterViewState extends State<RegisterView> {
     _mobileController.addListener(() {
       _viewModel.setMobileNumber(_mobileController.text);
     });
+    _viewModel.setCountryMobileCode(initCountryMobileCode);
   }
 
   @override
@@ -63,7 +65,12 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {}, icon: const Icon(Icons.arrow_back_ios)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Icons.arrow_back_ios),
+          color: Theme.of(context).primaryColor,
+        ),
       ),
       body: StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
@@ -81,192 +88,183 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   Widget _getContentWidget() {
-    return Padding(
-        padding: const EdgeInsets.only(top: AppPadding.p28),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Center(
-            child: Form(
-              key: _key,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p28),
-                child: Column(
-                  children: [
-                    /// logo
-                    const Center(
-                      child: Image(
-                        image: AssetImage(ImageAssets.splashLogo),
-                      ),
-                    ),
-                    const SizedBox(height: AppSize.s28),
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Center(
+        child: Form(
+          key: _key,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p28),
+            child: Column(
+              children: [
+                /// logo
+                const Center(
+                  child: Image(
+                    image: AssetImage(ImageAssets.splashLogo),
+                  ),
+                ),
+                const SizedBox(height: AppSize.s18),
 
-                    /// user name text
-                    StreamBuilder<String?>(
-                        stream: _viewModel.outputErrorUserName,
-                        builder: (context, snapshot) {
-                          return TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            controller: _userNameController,
-                            decoration: InputDecoration(
-                              hintText: AppStrings.username,
-                              labelText: AppStrings.username,
-                              errorText: snapshot.data,
-                            ),
-                          );
-                        }),
-                    const SizedBox(height: AppSize.s18),
-
-                    ///mobile
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppPadding.p28),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              flex: 1,
-                              child: CountryCodePicker(
-                                onChanged: (country) {
-                                  _viewModel.setCountryMobileCode(
-                                      country.code ?? Constants.token);
-                                },
-                                initialSelection: '+20',
-                                favorite: const ['+39', 'FR', '+966'],
-                                showCountryOnly: true,
-                                hideMainText: true,
-                                showOnlyCountryWhenClosed: true,
-                              )),
-                          Expanded(
-                            flex: 4,
-                            child: StreamBuilder<String?>(
-                                stream: _viewModel.outputErrorMobileNumber,
-                                builder: (context, snapshot) {
-                                  return TextFormField(
-                                    keyboardType: TextInputType.phone,
-                                    controller: _mobileController,
-                                    decoration: InputDecoration(
-                                      hintText: AppStrings.mobileNumber,
-                                      labelText: AppStrings.mobileNumber,
-                                      errorText: snapshot.data,
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: AppSize.s18),
-
-                    ///email
-                    StreamBuilder<String?>(
-                        stream: _viewModel.outputErrorEmail,
-                        builder: (context, snapshot) {
-                          return TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            controller: _emailController,
-                            decoration: InputDecoration(
-                              hintText: AppStrings.emailHint,
-                              labelText: AppStrings.emailHint,
-                              errorText: snapshot.data,
-                            ),
-                          );
-                        }),
-                    const SizedBox(height: AppSize.s18),
-
-                    ///password text
-                    StreamBuilder<String?>(
-                        stream: _viewModel.outputErrorPassword,
-                        builder: (context, snapshotValid) {
-                          return StreamBuilder<bool>(
-                              stream: _viewModel.outputIsShowHidePassword,
-                              builder: (context, snapshotShow) {
-                                return TextFormField(
-                                  keyboardType: TextInputType.visiblePassword,
-                                  obscureText: (snapshotShow.data ?? true)
-                                      ? true
-                                      : false,
-                                  controller: _passwordController,
-                                  decoration: InputDecoration(
-                                    hintText: AppStrings.password,
-                                    labelText: AppStrings.password,
-                                    errorText: snapshotValid.data,
-                                    suffix: IconButton(
-                                      padding:
-                                          const EdgeInsets.all(AppPadding.p0),
-                                      constraints: const BoxConstraints(),
-                                      onPressed: () {
-                                        _viewModel.showHidePassword();
-                                      },
-                                      icon: Icon(
-                                        (snapshotShow.data ?? true)
-                                            ? Icons.visibility_off
-                                            : Icons.visibility,
-                                        color: ColorManager.primary,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              });
-                        }),
-                    const SizedBox(height: AppSize.s18),
-
-                    ///profile field
-
-                    const SizedBox(height: AppSize.s28),
-                    SizedBox(
-                      height: AppSize.s40,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppSize.s8),
-                            border: Border.all(
-                              color: ColorManager.grey,
-                            )),
-                        child: GestureDetector(
-                          child: _getMediaWidget(),
-                          onTap: () {
-                            _showPicker(context);
-                          },
+                /// user name text
+                StreamBuilder<String?>(
+                    stream: _viewModel.outputErrorUserName,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: _userNameController,
+                        decoration: InputDecoration(
+                          hintText: AppStrings.username,
+                          labelText: AppStrings.username,
+                          errorText: snapshot.data,
                         ),
-                      ),
-                    ),
+                      );
+                    }),
+                const SizedBox(height: AppSize.s18),
 
-                    /// register button
-                    StreamBuilder<bool>(
-                        stream: _viewModel.outputAreAllInputsValid,
-                        builder: (context, snapshot) {
-                          return SizedBox(
-                            width: double.infinity,
-                            height: AppSize.s40,
-                            child: ElevatedButton(
-                              onPressed: (snapshot.data ?? false)
-                                  ? () {
-                                      _viewModel.register();
-                                    }
-                                  : null,
-                              child: const Text(AppStrings.register),
-                            ),
-                          );
-                        }),
-
-                    /// login have account
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: AppPadding.p18, horizontal: AppPadding.p28),
-                      child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
+                ///mobile
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: CountryCodePicker(
+                          onChanged: (country) {
+                            _viewModel.setCountryMobileCode(
+                                country.dialCode ?? Constants.token);
                           },
-                          child: Text(
-                            AppStrings.alreadyHaveAccount,
-                            style: Theme.of(context).textTheme.titleMedium,
-                            textAlign: TextAlign.end,
-                          )),
-                    )
+                          initialSelection: initCountryMobileCode,
+                          favorite: const ['+39', 'FR', '+966'],
+                          showCountryOnly: true,
+                          hideMainText: true,
+                          showOnlyCountryWhenClosed: true,
+                        )),
+                    Expanded(
+                      flex: 4,
+                      child: StreamBuilder<String?>(
+                          stream: _viewModel.outputErrorMobileNumber,
+                          builder: (context, snapshot) {
+                            return TextFormField(
+                              keyboardType: TextInputType.phone,
+                              controller: _mobileController,
+                              decoration: InputDecoration(
+                                hintText: AppStrings.mobileNumber,
+                                labelText: AppStrings.mobileNumber,
+                                errorText: snapshot.data,
+                              ),
+                            );
+                          }),
+                    ),
                   ],
                 ),
-              ),
+                const SizedBox(height: AppSize.s18),
+
+                ///email
+                StreamBuilder<String?>(
+                    stream: _viewModel.outputErrorEmail,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          hintText: AppStrings.emailHint,
+                          labelText: AppStrings.emailHint,
+                          errorText: snapshot.data,
+                        ),
+                      );
+                    }),
+                const SizedBox(height: AppSize.s18),
+
+                ///password text
+                StreamBuilder<String?>(
+                    stream: _viewModel.outputErrorPassword,
+                    builder: (context, snapshotValid) {
+                      return StreamBuilder<bool>(
+                          stream: _viewModel.outputIsShowHidePassword,
+                          builder: (context, snapshotShow) {
+                            return TextFormField(
+                              keyboardType: TextInputType.visiblePassword,
+                              obscureText:
+                                  (snapshotShow.data ?? true) ? true : false,
+                              controller: _passwordController,
+                              decoration: InputDecoration(
+                                hintText: AppStrings.password,
+                                labelText: AppStrings.password,
+                                errorText: snapshotValid.data,
+                                suffix: IconButton(
+                                  padding: const EdgeInsets.all(AppPadding.p0),
+                                  constraints: const BoxConstraints(),
+                                  onPressed: () {
+                                    _viewModel.showHidePassword();
+                                  },
+                                  icon: Icon(
+                                    (snapshotShow.data ?? true)
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: ColorManager.primary,
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    }),
+                const SizedBox(height: AppSize.s18),
+
+                ///profile field
+                SizedBox(
+                  height: AppSize.s40,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(AppSize.s8),
+                        border: Border.all(
+                          color: ColorManager.grey,
+                        )),
+                    child: GestureDetector(
+                      child: _getMediaWidget(),
+                      onTap: () {
+                        _showPicker(context);
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSize.s28),
+
+                /// register button
+                StreamBuilder<bool>(
+                    stream: _viewModel.outputAreAllInputsValid,
+                    builder: (context, snapshot) {
+                      return SizedBox(
+                        width: double.infinity,
+                        height: AppSize.s40,
+                        child: ElevatedButton(
+                          onPressed: (snapshot.data ?? false)
+                              ? () {
+                                  _viewModel.register();
+                                }
+                              : null,
+                          child: const Text(AppStrings.register),
+                        ),
+                      );
+                    }),
+
+                /// login have account
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: AppPadding.p8, horizontal: AppPadding.p28),
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        AppStrings.alreadyHaveAccount,
+                        style: Theme.of(context).textTheme.titleMedium,
+                        textAlign: TextAlign.end,
+                      )),
+                )
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _getMediaWidget() {
