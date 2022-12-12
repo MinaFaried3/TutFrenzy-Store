@@ -9,7 +9,6 @@ import 'package:frenzy_store/presentation/common/state_render/state_render_iml.d
 import 'package:frenzy_store/presentation/register/viewmodel/register_viewmodel.dart';
 import 'package:frenzy_store/presentation/resources/assets_manger.dart';
 import 'package:frenzy_store/presentation/resources/color_manager.dart';
-import 'package:frenzy_store/presentation/resources/routes_manager.dart';
 import 'package:frenzy_store/presentation/resources/strings_manager.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -217,9 +216,10 @@ class _RegisterViewState extends State<RegisterView> {
                       height: AppSize.s40,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(AppSize.s8),
                             border: Border.all(
-                          color: ColorManager.lightGrey,
-                        )),
+                              color: ColorManager.grey,
+                            )),
                         child: GestureDetector(
                           child: _getMediaWidget(),
                           onTap: () {
@@ -247,13 +247,13 @@ class _RegisterViewState extends State<RegisterView> {
                           );
                         }),
 
-                    /// row forget and register
+                    /// login have account
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: AppPadding.p18, horizontal: AppPadding.p28),
                       child: TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, Routes.loginRoute);
+                            Navigator.of(context).pop();
                           },
                           child: Text(
                             AppStrings.alreadyHaveAccount,

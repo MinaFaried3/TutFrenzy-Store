@@ -163,73 +163,67 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   void setCountryMobileCode(String code) {
-    if (!_isValidMobileCode(code)) {
-      registerObject = registerObject.copyWith(countryMobileCode: '');
-      _validateAllInputsSink();
-      return;
-    }
     inputCountryMobileCode.add(code);
-    registerObject = registerObject.copyWith(countryMobileCode: code);
+    if (_isValidMobileCode(code)) {
+      registerObject = registerObject.copyWith(countryMobileCode: code);
+    } else {
+      registerObject = registerObject.copyWith(countryMobileCode: '');
+    }
     _validateAllInputsSink();
   }
 
   @override
   void setEmail(String email) {
-    if (!_isValidEmail(email)) {
-      registerObject = registerObject.copyWith(email: '');
-      _validateAllInputsSink();
-      return;
-    }
     inputEmail.add(email);
-    registerObject = registerObject.copyWith(email: email);
+    if (_isValidEmail(email)) {
+      registerObject = registerObject.copyWith(email: email);
+    } else {
+      registerObject = registerObject.copyWith(email: '');
+    }
     _validateAllInputsSink();
   }
 
   @override
   void setMobileNumber(String mobileNumber) {
-    if (!_isValidMobileNumber(mobileNumber)) {
-      registerObject = registerObject.copyWith(mobileNumber: '');
-      _validateAllInputsSink();
-      return;
-    }
     inputMobileNumber.add(mobileNumber);
-    registerObject = registerObject.copyWith(mobileNumber: mobileNumber);
+    if (_isValidMobileNumber(mobileNumber)) {
+      registerObject = registerObject.copyWith(mobileNumber: mobileNumber);
+    } else {
+      registerObject = registerObject.copyWith(mobileNumber: '');
+    }
     _validateAllInputsSink();
   }
 
   @override
   void setPassword(String password) {
-    if (!_isValidPassword(password)) {
-      registerObject = registerObject.copyWith(password: '');
-      _validateAllInputsSink();
-      return;
-    }
     inputPassword.add(password);
-    registerObject = registerObject.copyWith(password: password);
+    if (_isValidPassword(password)) {
+      registerObject = registerObject.copyWith(password: password);
+    } else {
+      registerObject = registerObject.copyWith(password: '');
+    }
     _validateAllInputsSink();
   }
 
   @override
   void setProfile(File profile) {
-    if (profile.path.isEmpty) {
-      registerObject = registerObject.copyWith(profile: '');
-      _validateAllInputsSink();
-      return;
-    }
     inputProfile.add(profile);
-    registerObject = registerObject.copyWith(profile: profile.path);
+    if (profile.path.isNotEmpty) {
+      registerObject = registerObject.copyWith(profile: profile.path);
+    } else {
+      registerObject = registerObject.copyWith(profile: '');
+    }
     _validateAllInputsSink();
   }
 
   @override
   void setUserName(String userName) {
-    if (!_isValidUserName(userName)) {
-      registerObject = registerObject.copyWith(userName: '');
-      _validateAllInputsSink();
-      return;
-    }
     inputUserName.add(userName);
-    registerObject = registerObject.copyWith(userName: userName);
+    if (_isValidUserName(userName)) {
+      registerObject = registerObject.copyWith(userName: userName);
+    } else {
+      registerObject = registerObject.copyWith(userName: '');
+    }
     _validateAllInputsSink();
   }
 
