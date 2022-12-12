@@ -156,7 +156,7 @@ class RegisterViewModel extends BaseViewModel
           message: failure.message));
     }, (data) {
       inputState.add(SuccessState(
-          stateRenderType: StateRenderType.popupErrorState,
+          stateRenderType: StateRenderType.popupSuccessState,
           message: "welcome ${data.customer?.name ?? ""}"));
     });
   }
