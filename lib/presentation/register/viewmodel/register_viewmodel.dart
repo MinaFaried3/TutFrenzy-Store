@@ -158,6 +158,7 @@ class RegisterViewModel extends BaseViewModel
       inputState.add(SuccessState(
           stateRenderType: StateRenderType.popupSuccessState,
           message: "welcome ${data.customer?.name ?? ""}"));
+      isUserRegisteredSuccessfullyStreamController.add(true);
     });
   }
 
