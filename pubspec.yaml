@@ -92,7 +92,7 @@ flutter:
     - assets/images/invite_friends_ic.svg
     - assets/images/logout_ic.svg
     - assets/images/right_arrow_settings_ic.svg
-    - assets/images/photo-camera.svg
+    - assets/images/photo_camera_ic.svg
     - assets/json/loading.json
     - assets/json/empty.json
     - assets/json/error.json
