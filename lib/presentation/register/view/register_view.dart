@@ -287,26 +287,6 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  Widget _getMediaWidget2() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Flexible(child: Text(AppStrings.profilePicture)),
-          Flexible(
-              child: StreamBuilder<File>(
-            stream: _viewModel.outputIsProfile,
-            builder: (context, snapshot) {
-              return _imagePicket(snapshot.data);
-            },
-          )),
-          Flexible(child: SvgPicture.asset(ImageAssets.photoCameraIc))
-        ],
-      ),
-    );
-  }
-
   Widget _imagePicket(File? image) {
     if (image != null && image.path.isNotEmpty) {
       return Image.file(image);
