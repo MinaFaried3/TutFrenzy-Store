@@ -1,6 +1,7 @@
 import 'package:frenzy_store/data/network/app_api.dart';
 import 'package:frenzy_store/data/network/requests.dart';
 import 'package:frenzy_store/data/response/forgot_password_response.dart';
+import 'package:frenzy_store/data/response/home_response.dart';
 import 'package:frenzy_store/data/response/responses.dart';
 
 abstract class RemoteDataSource {
@@ -8,6 +9,7 @@ abstract class RemoteDataSource {
   Future<ForgotPasswordResponse> forgotPassword(
       ForgotPasswordRequest forgotPasswordRequest);
   Future<AuthenticationResponse> register(RegisterRequest registerRequest);
+  Future<HomeResponse> getHomeData();
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -37,5 +39,10 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         registerRequest.email,
         registerRequest.password,
         '');
+  }
+
+  @override
+  Future<HomeResponse> getHomeData() async {
+    return await _appServiceClient.getHomeData();
   }
 }

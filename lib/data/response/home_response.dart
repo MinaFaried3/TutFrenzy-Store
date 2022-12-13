@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'home_response.g.dart';
 
 @JsonSerializable()
-class ServicesResponse {
+class ServiceResponse {
   @JsonKey(name: 'id')
   final int? id;
   @JsonKey(name: 'title')
@@ -12,16 +12,16 @@ class ServicesResponse {
   @JsonKey(name: 'image')
   final String? image;
 
-  ServicesResponse(this.id, this.title, this.image);
+  ServiceResponse(this.id, this.title, this.image);
 
-  Map<String, dynamic> toJson() => _$ServicesResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ServiceResponseToJson(this);
 
-  factory ServicesResponse.fromJson(Map<String, dynamic> json) =>
-      _$ServicesResponseFromJson(json);
+  factory ServiceResponse.fromJson(Map<String, dynamic> json) =>
+      _$ServiceResponseFromJson(json);
 }
 
 @JsonSerializable()
-class BannersResponse {
+class BannerResponse {
   @JsonKey(name: 'id')
   final int? id;
   @JsonKey(name: 'link')
@@ -31,16 +31,16 @@ class BannersResponse {
   @JsonKey(name: 'image')
   final String? image;
 
-  BannersResponse(this.id, this.link, this.title, this.image);
+  BannerResponse(this.id, this.link, this.title, this.image);
 
-  Map<String, dynamic> toJson() => _$BannersResponseToJson(this);
+  Map<String, dynamic> toJson() => _$BannerResponseToJson(this);
 
-  factory BannersResponse.fromJson(Map<String, dynamic> json) =>
-      _$BannersResponseFromJson(json);
+  factory BannerResponse.fromJson(Map<String, dynamic> json) =>
+      _$BannerResponseFromJson(json);
 }
 
 @JsonSerializable()
-class StoresResponse {
+class StoreResponse {
   @JsonKey(name: 'id')
   final int? id;
   @JsonKey(name: 'title')
@@ -48,22 +48,22 @@ class StoresResponse {
   @JsonKey(name: 'image')
   final String? image;
 
-  StoresResponse(this.id, this.title, this.image);
+  StoreResponse(this.id, this.title, this.image);
 
-  Map<String, dynamic> toJson() => _$StoresResponseToJson(this);
+  Map<String, dynamic> toJson() => _$StoreResponseToJson(this);
 
-  factory StoresResponse.fromJson(Map<String, dynamic> json) =>
-      _$StoresResponseFromJson(json);
+  factory StoreResponse.fromJson(Map<String, dynamic> json) =>
+      _$StoreResponseFromJson(json);
 }
 
 @JsonSerializable()
-class HomeDataResponse extends BaseResponse {
+class HomeDataResponse {
   @JsonKey(name: 'services')
-  final List<ServicesResponse>? services;
+  final List<ServiceResponse>? services;
   @JsonKey(name: 'banners')
-  final List<BannersResponse>? banners;
+  final List<BannerResponse>? banners;
   @JsonKey(name: 'stores')
-  final List<StoresResponse>? stores;
+  final List<StoreResponse>? stores;
 
   HomeDataResponse(this.services, this.banners, this.stores);
 
@@ -71,4 +71,17 @@ class HomeDataResponse extends BaseResponse {
 
   factory HomeDataResponse.fromJson(Map<String, dynamic> json) =>
       _$HomeDataResponseFromJson(json);
+}
+
+@JsonSerializable()
+class HomeResponse extends BaseResponse {
+  @JsonKey(name: 'data')
+  final HomeDataResponse? data;
+
+  HomeResponse(this.data);
+
+  Map<String, dynamic> toJson() => _$HomeResponseToJson(this);
+
+  factory HomeResponse.fromJson(Map<String, dynamic> json) =>
+      _$HomeResponseFromJson(json);
 }
