@@ -40,12 +40,22 @@ class Store extends Equatable {
 }
 
 class HomeData extends Equatable {
-  final List<ServiceModel>? services;
-  final List<Banner>? banners;
-  final List<Store>? stores;
+  final List<ServiceModel> services;
+  final List<Banner> banners;
+  final List<Store> stores;
 
-  const HomeData({this.services, this.banners, this.stores});
+  const HomeData(
+      {required this.services, required this.banners, required this.stores});
 
   @override
   List<Object?> get props => [services, banners, stores];
+}
+
+class Home extends Equatable {
+  final HomeData? data;
+
+  const Home({required this.data});
+
+  @override
+  List<Object?> get props => [data];
 }

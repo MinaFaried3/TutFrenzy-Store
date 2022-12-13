@@ -3,7 +3,7 @@ import 'package:frenzy_store/app/extension.dart';
 import 'package:frenzy_store/data/response/home_response.dart';
 import 'package:frenzy_store/domain/models/home_model.dart';
 
-extension ServiceMapper on ServiceResponse? {
+extension Service on ServiceResponse? {
   ServiceModel toDomain() => ServiceModel(
         id: this?.id?.orZero() ?? Constants.zero,
         title: this?.title?.orEmpty() ?? Constants.empty,
@@ -30,8 +30,21 @@ extension StoreMapper on StoreResponse? {
 
 extension HomeDataMapper on HomeDataResponse? {
   HomeData toDomain() => HomeData(
-        services: this?.services?.map((service) => service.toDomain()).toList(),
-        banners: this?.banners?.map((banner) => banner.toDomain()).toList(),
-        stores: this?.stores?.map((store) => store.toDomain()).toList(),
+        services: (this?.services?.map((service) => service.toDomain()) ??
+                const Iterable.empty())
+            .cast<ServiceModel>()
+            .toList(),
+        banners: (this?.banners?.map((banner) => banner.toDomain()) ??
+                const Iterable.empty())
+            .cast<Banner>()
+            .toList(),
+        stores: (this?.stores?.map((store) => store.toDomain()) ??
+                const Iterable.empty())
+            .cast<Store>()
+            .toList(),
       );
+}
+
+extension HomeMapper on HomeResponse? {
+  Home toDomain() => Home(data: this?.data.toDomain());
 }

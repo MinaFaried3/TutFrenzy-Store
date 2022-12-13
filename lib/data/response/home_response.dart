@@ -57,7 +57,7 @@ class StoreResponse {
 }
 
 @JsonSerializable()
-class HomeDataResponse extends BaseResponse {
+class HomeDataResponse {
   @JsonKey(name: 'services')
   final List<ServiceResponse>? services;
   @JsonKey(name: 'banners')
@@ -71,4 +71,17 @@ class HomeDataResponse extends BaseResponse {
 
   factory HomeDataResponse.fromJson(Map<String, dynamic> json) =>
       _$HomeDataResponseFromJson(json);
+}
+
+@JsonSerializable()
+class HomeResponse extends BaseResponse {
+  @JsonKey(name: 'data')
+  final HomeDataResponse? data;
+
+  HomeResponse(this.data);
+
+  Map<String, dynamic> toJson() => _$HomeResponseToJson(this);
+
+  factory HomeResponse.fromJson(Map<String, dynamic> json) =>
+      _$HomeResponseFromJson(json);
 }
