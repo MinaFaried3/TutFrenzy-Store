@@ -12,6 +12,8 @@ try using dismiss dialog in all function before switch in state_render_impl
 animated drawer from ismail elmogy
 user regex in register
 setState in appbar title main screen
+convert response classes to equatable
+create base class in home response to avoid duplicate code
 
 
 
