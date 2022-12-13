@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class Service extends Equatable {
+class ServiceModel extends Equatable {
   final int id;
   final String title;
   final String image;
 
-  const Service(this.id, this.title, this.image);
+  const ServiceModel(
+      {required this.id, required this.title, required this.image});
 
   @override
   List<Object> get props => [id, title, image];
@@ -17,7 +18,11 @@ class Banner extends Equatable {
   final String title;
   final String image;
 
-  const Banner(this.id, this.link, this.title, this.image);
+  const Banner(
+      {required this.id,
+      required this.link,
+      required this.title,
+      required this.image});
 
   @override
   List<Object> get props => [id, link, title, image];
@@ -28,18 +33,18 @@ class Store extends Equatable {
   final String title;
   final String image;
 
-  const Store(this.id, this.title, this.image);
+  const Store({required this.id, required this.title, required this.image});
 
   @override
   List<Object> get props => [id, title, image];
 }
 
 class HomeData extends Equatable {
-  final List<Service>? services;
+  final List<ServiceModel>? services;
   final List<Banner>? banners;
   final List<Store>? stores;
 
-  const HomeData(this.services, this.banners, this.stores);
+  const HomeData({this.services, this.banners, this.stores});
 
   @override
   List<Object?> get props => [services, banners, stores];
