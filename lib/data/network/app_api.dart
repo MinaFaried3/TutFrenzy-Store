@@ -39,5 +39,5 @@ abstract class AppServiceClient {
   );
 
   @GET(homeEndPoint)
-  Future<HomeDataResponse> homeData();
+  Future<HomeDataResponse> getHomeData();
 }
