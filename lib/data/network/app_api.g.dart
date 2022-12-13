@@ -110,7 +110,7 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<HomeDataResponse> homeData() async {
+  Future<HomeDataResponse> getHomeData() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
