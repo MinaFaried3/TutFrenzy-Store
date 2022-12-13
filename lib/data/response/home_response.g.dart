@@ -6,29 +6,29 @@ part of 'home_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ServicesResponse _$ServicesResponseFromJson(Map<String, dynamic> json) =>
-    ServicesResponse(
+ServiceResponse _$ServiceResponseFromJson(Map<String, dynamic> json) =>
+    ServiceResponse(
       json['id'] as int?,
       json['title'] as String?,
       json['image'] as String?,
     );
 
-Map<String, dynamic> _$ServicesResponseToJson(ServicesResponse instance) =>
+Map<String, dynamic> _$ServiceResponseToJson(ServiceResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'image': instance.image,
     };
 
-BannersResponse _$BannersResponseFromJson(Map<String, dynamic> json) =>
-    BannersResponse(
+BannerResponse _$BannerResponseFromJson(Map<String, dynamic> json) =>
+    BannerResponse(
       json['id'] as int?,
       json['link'] as String?,
       json['title'] as String?,
       json['image'] as String?,
     );
 
-Map<String, dynamic> _$BannersResponseToJson(BannersResponse instance) =>
+Map<String, dynamic> _$BannerResponseToJson(BannerResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'link': instance.link,
@@ -36,14 +36,14 @@ Map<String, dynamic> _$BannersResponseToJson(BannersResponse instance) =>
       'image': instance.image,
     };
 
-StoresResponse _$StoresResponseFromJson(Map<String, dynamic> json) =>
-    StoresResponse(
+StoreResponse _$StoreResponseFromJson(Map<String, dynamic> json) =>
+    StoreResponse(
       json['id'] as int?,
       json['title'] as String?,
       json['image'] as String?,
     );
 
-Map<String, dynamic> _$StoresResponseToJson(StoresResponse instance) =>
+Map<String, dynamic> _$StoreResponseToJson(StoreResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
@@ -53,13 +53,13 @@ Map<String, dynamic> _$StoresResponseToJson(StoresResponse instance) =>
 HomeDataResponse _$HomeDataResponseFromJson(Map<String, dynamic> json) =>
     HomeDataResponse(
       (json['services'] as List<dynamic>?)
-          ?.map((e) => ServicesResponse.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => ServiceResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       (json['banners'] as List<dynamic>?)
-          ?.map((e) => BannersResponse.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => BannerResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       (json['stores'] as List<dynamic>?)
-          ?.map((e) => StoresResponse.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => StoreResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     )
       ..status = json['status'] as int?
