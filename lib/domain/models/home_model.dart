@@ -1,12 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class ServiceModel extends Equatable {
+class Service extends Equatable {
   final int id;
   final String title;
   final String image;
 
-  const ServiceModel(
-      {required this.id, required this.title, required this.image});
+  const Service({required this.id, required this.title, required this.image});
 
   @override
   List<Object> get props => [id, title, image];
@@ -40,7 +39,7 @@ class Store extends Equatable {
 }
 
 class HomeData extends Equatable {
-  final List<ServiceModel> services;
+  final List<Service> services;
   final List<Banner> banners;
   final List<Store> stores;
 
