@@ -47,5 +47,5 @@ extension HomeDataMapper on HomeDataResponse? {
 }
 
 extension HomeMapper on HomeResponse? {
-  Home toDomain() => Home(data: this?.data.toDomain());
+  Home toDomain() => Home(data: this!.data.toDomain());
 }

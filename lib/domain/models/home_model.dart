@@ -51,7 +51,7 @@ class HomeData extends Equatable {
 }
 
 class Home extends Equatable {
-  final HomeData? data;
+  final HomeData data;
 
   const Home({required this.data});
 

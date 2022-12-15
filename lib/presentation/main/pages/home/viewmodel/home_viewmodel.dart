@@ -11,12 +11,8 @@ import 'package:rxdart/rxdart.dart';
 
 class HomeViewModel extends BaseViewModel
     with HomeViewModeInputs, HomeViewModeOutputs {
-  final StreamController _bannersStreamController =
-      BehaviorSubject<List<Banner>>();
-  final StreamController _servicesStreamController =
-      BehaviorSubject<List<Service>>();
-  final StreamController _storesStreamController =
-      BehaviorSubject<List<Store>>();
+  final StreamController _homeDataStreamController =
+      BehaviorSubject<HomeViewObject>();
 
   final GetHomeUseCase _getHomeUseCase;
 
@@ -30,33 +26,17 @@ class HomeViewModel extends BaseViewModel
   @override
   void dispose() {
     super.dispose();
-    _bannersStreamController.close();
-    _servicesStreamController.close();
-    _storesStreamController.close();
+    _homeDataStreamController.close();
   }
 
   ///sink inputs
   @override
-  Sink get inputBanners => _bannersStreamController.sink;
-
-  @override
-  Sink get inputServices => _servicesStreamController.sink;
-
-  @override
-  Sink get inputStores => _storesStreamController.sink;
+  Sink get inputHomeData => _homeDataStreamController.sink;
 
   ///output
   @override
-  Stream<List<Banner>> get outputBanners =>
-      _bannersStreamController.stream.map((banners) => banners);
-
-  @override
-  Stream<List<Service>> get outputServices =>
-      _servicesStreamController.stream.map((services) => services);
-
-  @override
-  Stream<List<Store>> get outputStores =>
-      _storesStreamController.stream.map((stores) => stores);
+  Stream<HomeViewObject> get outputHomeData =>
+      _homeDataStreamController.stream.map((homeData) => homeData);
 
   ///private methods
   Future<void> _getHomeData() async {
@@ -71,23 +51,26 @@ class HomeViewModel extends BaseViewModel
           stateRenderType: StateRenderType.fullScreenErrorState,
           message: failure.message));
     }, (data) {
-      printK("data is here {{{ ${data.data?.banners.first.title} }}}");
+      printK("data is here {{{ ${data.data.banners.first.title} }}}");
+      inputHomeData.add(HomeViewObject(
+          data.data.stores, data.data.services, data.data.banners));
       inputState.add(ContentState());
-      inputBanners.add(data.data?.banners);
-      inputServices.add(data.data?.services);
-      inputStores.add(data.data?.stores);
     });
   }
 }
 
 abstract class HomeViewModeInputs {
-  Sink get inputStores;
-  Sink get inputServices;
-  Sink get inputBanners;
+  Sink get inputHomeData;
 }
 
 abstract class HomeViewModeOutputs {
-  Stream<List<Store>> get outputStores;
-  Stream<List<Service>> get outputServices;
-  Stream<List<Banner>> get outputBanners;
+  Stream<HomeViewObject> get outputHomeData;
+}
+
+class HomeViewObject {
+  List<Store> stores;
+  List<Service> services;
+  List<Banner> banners;
+
+  HomeViewObject(this.stores, this.services, this.banners);
 }

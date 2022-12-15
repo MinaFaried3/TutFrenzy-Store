@@ -56,28 +56,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _getContentWidget() {
-    return Padding(
-      padding: const EdgeInsets.only(
-          left: AppPadding.p12, top: AppPadding.p12, bottom: AppPadding.p2),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _getBannersCarousel(),
-          _getSection(AppStrings.services),
-          _getServices(),
-          _getSection(AppStrings.stores),
-          _getStores()
-        ],
-      ),
+    return StreamBuilder<HomeViewObject>(
+      stream: _viewModel.outputHomeData,
+      builder: (context, snapshot) {
+        return Padding(
+          padding: const EdgeInsets.only(
+              left: AppPadding.p12, top: AppPadding.p12, bottom: AppPadding.p2),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _getBannersWidget(snapshot.data?.banners),
+              _getSection(AppStrings.services),
+              _getServicesWidget(snapshot.data?.services),
+              _getSection(AppStrings.stores),
+              _getStoresWidget(snapshot.data?.stores)
+            ],
+          ),
+        );
+      },
     );
-  }
-
-  Widget _getBannersCarousel() {
-    return StreamBuilder<List<home.Banner>>(
-        stream: _viewModel.outputBanners,
-        builder: (context, snapshot) {
-          return _getBannersWidget(snapshot.data);
-        });
   }
 
   Widget _getSection(String title) {
@@ -85,22 +82,6 @@ class _HomePageState extends State<HomePage> {
       title,
       style: Theme.of(context).textTheme.labelSmall,
     );
-  }
-
-  Widget _getServices() {
-    return StreamBuilder<List<home.Service>>(
-        stream: _viewModel.outputServices,
-        builder: (context, snapshot) {
-          return _getServicesWidget(snapshot.data);
-        });
-  }
-
-  Widget _getStores() {
-    return StreamBuilder<List<home.Store>>(
-        stream: _viewModel.outputStores,
-        builder: (context, snapshot) {
-          return _getStoresWidget(snapshot.data);
-        });
   }
 
   Widget _getBannersWidget(List<home.Banner>? banners) {
