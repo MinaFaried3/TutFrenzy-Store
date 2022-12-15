@@ -7,10 +7,12 @@ import 'package:frenzy_store/data/network/network_info.dart';
 import 'package:frenzy_store/data/repository/repository_impl.dart';
 import 'package:frenzy_store/domain/repository/repository.dart';
 import 'package:frenzy_store/domain/usecase/forgot_password_use_case.dart';
+import 'package:frenzy_store/domain/usecase/get_home_data_use_case.dart';
 import 'package:frenzy_store/domain/usecase/login_usecase.dart';
 import 'package:frenzy_store/domain/usecase/register_use_case.dart';
 import 'package:frenzy_store/presentation/forgot_password/viewmodel/forgot_password_viewmodel.dart';
 import 'package:frenzy_store/presentation/login/viewmodel/login_viewmodel.dart';
+import 'package:frenzy_store/presentation/main/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:frenzy_store/presentation/register/viewmodel/register_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -87,5 +89,16 @@ void initRegisterModule() {
 
     //image picker
     getItInstance.registerFactory<ImagePicker>(() => ImagePicker());
+  }
+}
+
+void initHomeModule() {
+  if (!GetIt.I.isRegistered<GetHomeUseCase>()) {
+    //use case
+    getItInstance.registerFactory<GetHomeUseCase>(
+        () => GetHomeUseCase(getItInstance<Repository>()));
+    //view model
+    getItInstance.registerFactory<HomeViewModel>(
+        () => HomeViewModel(getItInstance<GetHomeUseCase>()));
   }
 }
