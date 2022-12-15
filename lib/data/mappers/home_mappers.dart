@@ -1,10 +1,11 @@
 import 'package:frenzy_store/app/constants.dart';
 import 'package:frenzy_store/app/extension.dart';
 import 'package:frenzy_store/data/response/home_response.dart';
+import 'package:frenzy_store/domain/models/home_model.dart' as home;
 import 'package:frenzy_store/domain/models/home_model.dart';
 
 extension Service on ServiceResponse? {
-  ServiceModel toDomain() => ServiceModel(
+  home.Service toDomain() => home.Service(
         id: this?.id?.orZero() ?? Constants.zero,
         title: this?.title?.orEmpty() ?? Constants.empty,
         image: this?.image?.orEmpty() ?? Constants.empty,
@@ -32,7 +33,7 @@ extension HomeDataMapper on HomeDataResponse? {
   HomeData toDomain() => HomeData(
         services: (this?.services?.map((service) => service.toDomain()) ??
                 const Iterable.empty())
-            .cast<ServiceModel>()
+            .cast<home.Service>()
             .toList(),
         banners: (this?.banners?.map((banner) => banner.toDomain()) ??
                 const Iterable.empty())

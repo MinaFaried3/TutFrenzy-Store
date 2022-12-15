@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:frenzy_store/presentation/common/state_render/state_render_iml.dart';
+import 'package:rxdart/rxdart.dart';
 
 abstract class BaseViewModel extends BaseViewModelInputs
     with BaseViewModelOutputs {
   final StreamController _inputStateStreamController =
-      StreamController<FlowState>.broadcast();
+      BehaviorSubject<FlowState>();
 
   @override
   void dispose() {
