@@ -23,7 +23,7 @@ class LocalDataSourceImpl extends LocalDataSource {
   Future<HomeResponse> getHomeData() async {
     CachedItem? cachedItem = cacheMap[cacheHomeKey];
 
-    if (cachedItem == null || cachedItem.isValid(cacheHomeInterval)) {
+    if (cachedItem == null || !cachedItem.isValid(cacheHomeInterval)) {
       throw ErrorHandler.handle(DataSource.cacheError);
     }
 
