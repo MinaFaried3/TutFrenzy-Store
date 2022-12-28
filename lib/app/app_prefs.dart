@@ -41,6 +41,10 @@ class AppPreferences extends Equatable {
     return _sharedPreferences.getBool(isUserLoggedInKey) ?? false;
   }
 
+  Future<void> logout() async {
+    _sharedPreferences.remove(isUserLoggedInKey);
+  }
+
   @override
   List<Object> get props => [_sharedPreferences];
 }
