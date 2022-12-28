@@ -75,7 +75,7 @@ class LocalDataSourceImpl extends LocalDataSource {
 class CachedItem<T> extends Equatable {
   final T data;
 
-  final int cacheTime = DateTime.now().microsecondsSinceEpoch;
+  final int cacheTime = DateTime.now().millisecondsSinceEpoch;
 
   CachedItem(this.data);
 
