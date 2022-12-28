@@ -40,9 +40,9 @@ class AppStrings {
   static const settings = "settings";
   static const services = "services";
   static const stores = "stores";
-  static const String details = "details";
-  static const String about = "about";
-  static const String storeDetails = "store_details";
+  static const String details = "Details";
+  static const String about = "About Store";
+  static const String storeDetails = "Store Details";
   static const String changeLanguage = "change_language";
   static const String contactUs = "contact_us";
   static const String inviteYourFriends = "invite_your_friends";
