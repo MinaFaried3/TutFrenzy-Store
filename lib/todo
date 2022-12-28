@@ -1,3 +1,5 @@
+turn all of this to issue
+
 check responsive
 dark theme
 
@@ -83,3 +85,17 @@ MVVM -> STREAM CONTROLLER
 - add bind to init ,and dispose to dispose
 - stream builder flow state
 - stream builder for every input
+
+///*-------------------------------------------------------------------
+
+run time caching
+- create key and interval
+- create class generic of any data cachedItem and have the time of cache
+- create map of string and cachedItem
+-   Future<HomeResponse> getHomeData();
+    Future<void> saveHomeDataToCache(HomeResponse homeResponse);
+- extension to check isValid to get or not
+- repository => will try to get first from cache
+- if failed get from remote and save it
+- if app disposed or user log out clear the cache
+
