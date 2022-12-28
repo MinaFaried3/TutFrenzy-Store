@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:frenzy_store/app/constants.dart';
 import 'package:frenzy_store/data/response/forgot_password_response.dart';
 import 'package:frenzy_store/data/response/home_response.dart';
+import 'package:frenzy_store/data/response/store_details_response.dart';
 import 'package:retrofit/http.dart';
 
 import '../response/responses.dart';
@@ -16,6 +17,7 @@ const String loginEndPoint = "$customers/login";
 const String forgotPasswordEndPoint = "$customers/forgotPassword";
 const String registerEndPoint = "$customers/register";
 const String homeEndPoint = "/home";
+const String storeDetailsPoint = "/storeDetails/1";
 
 @RestApi(baseUrl: Constants.baseUrl)
 abstract class AppServiceClient {
@@ -40,4 +42,7 @@ abstract class AppServiceClient {
 
   @GET(homeEndPoint)
   Future<HomeResponse> getHomeData();
+
+  @GET(storeDetailsPoint)
+  Future<StoreDetailsResponse> getStoreDetails();
 }
