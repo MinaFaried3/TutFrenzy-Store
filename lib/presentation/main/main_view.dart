@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:frenzy_store/presentation/main/pages/home/view/home_page.dart';
 import 'package:frenzy_store/presentation/main/pages/notification/notification_page.dart';
@@ -23,13 +24,13 @@ class _MainViewState extends State<MainView> {
   ];
 
   final List<String> _titles = [
-    AppStrings.home,
-    AppStrings.search,
-    AppStrings.notifications,
-    AppStrings.settings,
+    AppStrings.home.tr(),
+    AppStrings.search.tr(),
+    AppStrings.notifications.tr(),
+    AppStrings.settings.tr(),
   ];
 
-  String _title = AppStrings.home;
+  String _title = AppStrings.home.tr();
   int _currentPage = 0;
   late Text _appBarText;
 
@@ -66,17 +67,19 @@ class _MainViewState extends State<MainView> {
                 _currentPage = index;
               });
             },
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined), label: AppStrings.home),
+                  icon: const Icon(Icons.home_outlined),
+                  label: AppStrings.home.tr()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search_outlined), label: AppStrings.search),
+                  icon: const Icon(Icons.search_outlined),
+                  label: AppStrings.search.tr()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.notifications_outlined),
-                  label: AppStrings.notifications),
+                  icon: const Icon(Icons.notifications_outlined),
+                  label: AppStrings.notifications.tr()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.settings_outlined),
-                  label: AppStrings.settings),
+                  icon: const Icon(Icons.settings_outlined),
+                  label: AppStrings.settings.tr()),
             ],
           );
         },

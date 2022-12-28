@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:frenzy_store/app/functions.dart';
 import 'package:frenzy_store/domain/usecase/register_use_case.dart';
 import 'package:frenzy_store/presentation/base/base_view_model.dart';
@@ -103,8 +104,8 @@ class RegisterViewModel extends BaseViewModel
   Stream<bool> get outputIsEmail =>
       _emailStreamController.stream.map((email) => _isValidEmail(email));
   @override
-  Stream<String?> get outputErrorEmail => outputIsEmail
-      .map((isEmailValid) => isEmailValid ? null : AppStrings.invalidEmail);
+  Stream<String?> get outputErrorEmail => outputIsEmail.map(
+      (isEmailValid) => isEmailValid ? null : AppStrings.invalidEmail.tr());
 
   @override
   Stream<bool> get outputIsMobileNumber => _mobileNumberStreamController.stream
@@ -112,14 +113,14 @@ class RegisterViewModel extends BaseViewModel
   @override
   Stream<String?> get outputErrorMobileNumber =>
       outputIsMobileNumber.map((isMobileNumber) =>
-          isMobileNumber ? null : AppStrings.mobileNumberInvalid);
+          isMobileNumber ? null : AppStrings.mobileNumberInvalid.tr());
 
   @override
   Stream<bool> get outputIsPassword => _passwordStreamController.stream
       .map((password) => _isValidPassword(password));
   @override
   Stream<String?> get outputErrorPassword => outputIsPassword
-      .map((isPassword) => isPassword ? null : AppStrings.passwordInvalid);
+      .map((isPassword) => isPassword ? null : AppStrings.passwordInvalid.tr());
 
   @override
   Stream<File> get outputIsProfile =>
@@ -134,7 +135,7 @@ class RegisterViewModel extends BaseViewModel
       .map((userName) => _isValidUserName(userName));
   @override
   Stream<String?> get outputErrorUserName => outputIsUserName
-      .map((isUserName) => isUserName ? null : AppStrings.userNameInvalid);
+      .map((isUserName) => isUserName ? null : AppStrings.userNameInvalid.tr());
 
   ///inputs methods
   @override

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:frenzy_store/app/dependency_injection.dart';
 import 'package:frenzy_store/domain/models/store_details_model.dart';
@@ -56,7 +57,7 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
     return Scaffold(
         backgroundColor: ColorManager.white,
         appBar: AppBar(
-          title: const Text(AppStrings.storeDetails),
+          title: const Text(AppStrings.storeDetails).tr(),
           elevation: AppSize.s0,
           iconTheme: IconThemeData(
             //back button
@@ -91,11 +92,11 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
             width: double.infinity,
             height: 250,
           )),
-          _getSection(AppStrings.details),
+          _getSection(AppStrings.details.tr()),
           _getInfoText(storeDetails.details),
-          _getSection(AppStrings.services),
+          _getSection(AppStrings.services.tr()),
           _getInfoText(storeDetails.services),
-          _getSection(AppStrings.about),
+          _getSection(AppStrings.about.tr()),
           _getInfoText(storeDetails.about)
         ],
       );

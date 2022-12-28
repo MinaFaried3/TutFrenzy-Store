@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:frenzy_store/presentation/base/base_view_model.dart';
 
 import '../../../domain/models/onboarding_models.dart';
@@ -65,14 +66,14 @@ class OnBoardingViewModel extends BaseViewModel
 
   /// OnBoarding private functions
   List<SliderObject> _getSliderData() => [
-        const SliderObject(AppStrings.onBoardingTitle1,
-            AppStrings.onBoardingSubTitle1, ImageAssets.onBoardingLogo1),
-        const SliderObject(AppStrings.onBoardingTitle2,
-            AppStrings.onBoardingSubTitle2, ImageAssets.onBoardingLogo2),
-        const SliderObject(AppStrings.onBoardingTitle3,
-            AppStrings.onBoardingSubTitle3, ImageAssets.onBoardingLogo3),
-        const SliderObject(AppStrings.onBoardingTitle4,
-            AppStrings.onBoardingSubTitle4, ImageAssets.onBoardingLogo4),
+        SliderObject(AppStrings.onBoardingTitle1.tr(),
+            AppStrings.onBoardingSubTitle1.tr(), ImageAssets.onBoardingLogo1),
+        SliderObject(AppStrings.onBoardingTitle2.tr(),
+            AppStrings.onBoardingSubTitle2.tr(), ImageAssets.onBoardingLogo2),
+        SliderObject(AppStrings.onBoardingTitle3.tr(),
+            AppStrings.onBoardingSubTitle3.tr(), ImageAssets.onBoardingLogo3),
+        SliderObject(AppStrings.onBoardingTitle4.tr(),
+            AppStrings.onBoardingSubTitle4.tr(), ImageAssets.onBoardingLogo4),
       ];
 
   void _postDataToView() {

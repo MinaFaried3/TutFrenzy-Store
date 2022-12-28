@@ -1,9 +1,14 @@
+import 'dart:math';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frenzy_store/app/app_prefs.dart';
 import 'package:frenzy_store/app/dependency_injection.dart';
 import 'package:frenzy_store/data/data_source/local_data_source.dart';
 import 'package:frenzy_store/presentation/resources/assets_manger.dart';
+import 'package:frenzy_store/presentation/resources/language_manager.dart';
 import 'package:frenzy_store/presentation/resources/routes_manager.dart';
 import 'package:frenzy_store/presentation/resources/strings_manager.dart';
 import 'package:frenzy_store/presentation/resources/values_manager.dart';
@@ -26,36 +31,36 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           ListTile(
             leading: SvgPicture.asset(ImageAssets.changeLangIc),
-            title: Text(AppStrings.changeLanguage,
+            title: Text(AppStrings.changeLanguage.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
-            trailing: SvgPicture.asset(ImageAssets.rightArrowSettingsIc),
+            trailing: _getArrowSvg(),
             onTap: () {
               _changeLanguage();
             },
           ),
           ListTile(
             leading: SvgPicture.asset(ImageAssets.contactUsIc),
-            title: Text(AppStrings.contactUs,
+            title: Text(AppStrings.contactUs.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
-            trailing: SvgPicture.asset(ImageAssets.rightArrowSettingsIc),
+            trailing: _getArrowSvg(),
             onTap: () {
               _contactUs();
             },
           ),
           ListTile(
             leading: SvgPicture.asset(ImageAssets.inviteFriendsIc),
-            title: Text(AppStrings.inviteYourFriends,
+            title: Text(AppStrings.inviteYourFriends.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
-            trailing: SvgPicture.asset(ImageAssets.rightArrowSettingsIc),
+            trailing: _getArrowSvg(),
             onTap: () {
               _inviteFriends();
             },
           ),
           ListTile(
             leading: SvgPicture.asset(ImageAssets.logoutIc),
-            title: Text(AppStrings.logout,
+            title: Text(AppStrings.logout.tr(),
                 style: Theme.of(context).textTheme.bodyLarge),
-            trailing: SvgPicture.asset(ImageAssets.rightArrowSettingsIc),
+            trailing: _getArrowSvg(),
             onTap: () {
               _logout();
             },
@@ -65,8 +70,14 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  bool isRtl() {
+    return context.locale == arabicLocale;
+  }
+
   _changeLanguage() {
     // i will implement it later
+    _appPreferences.changeAppLanguage();
+    Phoenix.rebirth(context);
   }
 
   _contactUs() {
@@ -86,5 +97,12 @@ class _SettingsPageState extends State<SettingsPage> {
 
     // navigate to login screen
     Navigator.pushReplacementNamed(context, Routes.loginRoute);
+  }
+
+  Widget _getArrowSvg() {
+    return Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.rotationY(isRtl() ? pi : 0),
+        child: SvgPicture.asset(ImageAssets.rightArrowSettingsIc));
   }
 }
