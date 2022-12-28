@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:frenzy_store/data/network/failure.dart';
 import 'package:frenzy_store/presentation/resources/strings_manager.dart';
 
@@ -119,85 +120,85 @@ extension DataSourceExtension on DataSource {
       case DataSource.success:
         return Failure(
           DataSource.success.code,
-          DataSource.success.message,
+          DataSource.success.message.tr(),
         );
 
       case DataSource.noContent:
         return Failure(
           DataSource.noContent.code,
-          DataSource.noContent.message,
+          DataSource.noContent.message.tr(),
         );
 
       case DataSource.badRequest:
         return Failure(
           DataSource.badRequest.code,
-          DataSource.badRequest.message,
+          DataSource.badRequest.message.tr(),
         );
 
       case DataSource.forbidden:
         return Failure(
           DataSource.forbidden.code,
-          DataSource.forbidden.message,
+          DataSource.forbidden.message.tr(),
         );
 
       case DataSource.unauthorized:
         return Failure(
           DataSource.unauthorized.code,
-          DataSource.unauthorized.message,
+          DataSource.unauthorized.message.tr(),
         );
 
       case DataSource.notFound:
         return Failure(
           DataSource.notFound.code,
-          DataSource.notFound.message,
+          DataSource.notFound.message.tr(),
         );
 
       case DataSource.internalServerError:
         return Failure(
           DataSource.internalServerError.code,
-          DataSource.internalServerError.message,
+          DataSource.internalServerError.message.tr(),
         );
 
       case DataSource.connectTimeout:
         return Failure(
           DataSource.connectTimeout.code,
-          DataSource.connectTimeout.message,
+          DataSource.connectTimeout.message.tr(),
         );
 
       case DataSource.cancel:
         return Failure(
           DataSource.cancel.code,
-          DataSource.cancel.message,
+          DataSource.cancel.message.tr(),
         );
 
       case DataSource.receiveTimeout:
         return Failure(
           DataSource.receiveTimeout.code,
-          DataSource.receiveTimeout.message,
+          DataSource.receiveTimeout.message.tr(),
         );
 
       case DataSource.sendTimeout:
         return Failure(
           DataSource.sendTimeout.code,
-          DataSource.sendTimeout.message,
+          DataSource.sendTimeout.message.tr(),
         );
 
       case DataSource.cacheError:
         return Failure(
           DataSource.cacheError.code,
-          DataSource.cacheError.message,
+          DataSource.cacheError.message.tr(),
         );
 
       case DataSource.noInternetConnection:
         return Failure(
           DataSource.noInternetConnection.code,
-          DataSource.noInternetConnection.message,
+          DataSource.noInternetConnection.message.tr(),
         );
 
       case DataSource.defaultState:
         return Failure(
           DataSource.defaultState.code,
-          DataSource.defaultState.message,
+          DataSource.defaultState.message.tr(),
         );
     }
   }

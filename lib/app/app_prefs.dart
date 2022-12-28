@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:equatable/equatable.dart';
 import 'package:frenzy_store/presentation/resources/language_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +24,18 @@ class AppPreferences extends Equatable {
     }
   }
 
+  Future<void> changeAppLanguage() async {
+    final String currLanguage = await getAppLanguage();
+
+    if (currLanguage == LanguageType.arabic.getLang) {
+      await _sharedPreferences.setString(
+          languageKey, LanguageType.english.getLang);
+    } else {
+      await _sharedPreferences.setString(
+          languageKey, LanguageType.arabic.getLang);
+    }
+  }
+
   //onBoarding
   Future<void> setOnBoardingScreenViewed() async {
     _sharedPreferences.setBool(onBoardingViewedKey, true);
@@ -43,6 +57,16 @@ class AppPreferences extends Equatable {
 
   Future<void> logout() async {
     _sharedPreferences.remove(isUserLoggedInKey);
+  }
+
+  Future<Locale> getLocale() async {
+    final String currLanguage = await getAppLanguage();
+
+    if (currLanguage == LanguageType.arabic.getLang) {
+      return arabicLocale;
+    } else {
+      return englishLocale;
+    }
   }
 
   @override

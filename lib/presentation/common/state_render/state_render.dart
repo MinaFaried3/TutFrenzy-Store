@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:frenzy_store/app/constants.dart';
 import 'package:frenzy_store/presentation/resources/assets_manger.dart';
@@ -52,13 +53,13 @@ class StateRenderer extends StatelessWidget {
         return _getPopupDialog(context, [
           _getAnimatedImage(JsonAssets.error),
           _getTitle(message),
-          _getButtonState(AppStrings.ok, context),
+          _getButtonState(AppStrings.ok.tr(), context),
         ]);
       case StateRenderType.popupSuccessState:
         return _getPopupDialog(context, [
           _getAnimatedImage(JsonAssets.success),
           _getTitle(message),
-          _getButtonState(AppStrings.ok, context),
+          _getButtonState(AppStrings.ok.tr(), context),
         ]);
       case StateRenderType.fullScreenLoadingState:
         return _getStateItems([
@@ -69,7 +70,7 @@ class StateRenderer extends StatelessWidget {
         return _getStateItems([
           _getAnimatedImage(JsonAssets.error),
           _getTitle(message),
-          _getButtonState(AppStrings.retryAgain, context),
+          _getButtonState(AppStrings.retryAgain.tr(), context),
         ]);
       case StateRenderType.fullScreenEmptyState:
         return _getStateItems([
