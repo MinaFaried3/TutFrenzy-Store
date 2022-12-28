@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:frenzy_store/data/data_source/local_data_source.dart';
 import 'package:frenzy_store/data/data_source/remote_data_source.dart';
 import 'package:frenzy_store/data/mappers/forgot_password_mappers.dart';
 import 'package:frenzy_store/data/mappers/home_mappers.dart';
@@ -15,22 +16,24 @@ import '../../app/constants.dart';
 import '../../domain/repository/repository.dart';
 
 class RepositoryImpl implements Repository {
-  final RemoteDataSource remoteDataSource;
-  final NetworkInfo networkInfo;
+  final RemoteDataSource _remoteDataSource;
+  final LocalDataSource _localDataSource;
+  final NetworkInfo _networkInfo;
 
-  RepositoryImpl(this.remoteDataSource, this.networkInfo);
+  RepositoryImpl(
+      this._remoteDataSource, this._localDataSource, this._networkInfo);
 
   @override
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
     // check the internet connection
-    if (!(await networkInfo.isConnected)) {
+    if (!(await _networkInfo.isConnected)) {
       return Left(DataSource.noInternetConnection.getFailure());
     }
 
     try {
       // get response data
-      final response = await remoteDataSource.login(loginRequest);
+      final response = await _remoteDataSource.login(loginRequest);
       printK("response is ---------------------- ${response.customer}");
       // response status is 0 => success
       if (response.status == ApiInternalStatus.success) {
@@ -53,13 +56,13 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, ForgotPassword>> forgotPassword(
       ForgotPasswordRequest forgotPasswordRequest) async {
     // check the internet connection
-    if (!(await networkInfo.isConnected)) {
+    if (!(await _networkInfo.isConnected)) {
       return Left(DataSource.noInternetConnection.getFailure());
     }
 
     try {
       final response =
-          await remoteDataSource.forgotPassword(forgotPasswordRequest);
+          await _remoteDataSource.forgotPassword(forgotPasswordRequest);
 
       if (response.status == ApiInternalStatus.success) {
         return Right(response.toDomain());
@@ -80,13 +83,13 @@ class RepositoryImpl implements Repository {
   Future<Either<Failure, Authentication>> register(
       RegisterRequest registerRequest) async {
     // check the internet connection
-    if (!(await networkInfo.isConnected)) {
+    if (!(await _networkInfo.isConnected)) {
       return Left(DataSource.noInternetConnection.getFailure());
     }
 
     try {
       // get response data
-      final response = await remoteDataSource.register(registerRequest);
+      final response = await _remoteDataSource.register(registerRequest);
       printK("response is ---------------------- ${response.customer?.name}");
       // response status is 0 => success
       if (response.status == ApiInternalStatus.success) {
@@ -107,30 +110,44 @@ class RepositoryImpl implements Repository {
 
   @override
   Future<Either<Failure, Home>> getHomeData() async {
-// check the internet connection
-    if (!(await networkInfo.isConnected)) {
-      return Left(DataSource.noInternetConnection.getFailure());
-    }
-
     try {
-      // get response data
-      final response = await remoteDataSource.getHomeData();
+      // get cached response data
+      final response = await _localDataSource.getHomeData();
       printK(
-          "response is ---------------------- ${response.data?.stores?.first.title}");
-      // response status is 0 => success
-      if (response.status == ApiInternalStatus.success) {
-        return Right(response.toDomain());
-      } else {
-        // response status is 1 => fail
-        return Left(Failure(
-          ApiInternalStatus.failure,
-          response.message ?? DataSource.defaultState.message,
-        ));
+          " ====================== GET DATA FROM CACHE ====================");
+      return Right(response.toDomain());
+    } catch (cacheError) {
+      //cache data is not exist or valid
+      // get from remote data source
+      // check the internet connection
+      printK(ErrorHandler.handle(cacheError).failure.message);
+      if (!(await _networkInfo.isConnected)) {
+        return Left(DataSource.noInternetConnection.getFailure());
       }
-    } catch (error) {
-      // error from dio
-      printK("error ------------------------------------- ${error.toString()}");
-      return Left(ErrorHandler.handle(error).failure);
+
+      try {
+        // get response data
+        final response = await _remoteDataSource.getHomeData();
+        printK(
+            "response is ---------------------- ${response.data?.stores?.first.title}");
+        // response status is 0 => success
+        if (response.status == ApiInternalStatus.success) {
+          _localDataSource.saveHomeDataToCache(response); //save to cache
+
+          return Right(response.toDomain());
+        } else {
+          // response status is 1 => fail
+          return Left(Failure(
+            ApiInternalStatus.failure,
+            response.message ?? DataSource.defaultState.message,
+          ));
+        }
+      } catch (error) {
+        // error from dio
+        printK(
+            "error ------------------------------------- ${error.toString()}");
+        return Left(ErrorHandler.handle(error).failure);
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:frenzy_store/app/app_prefs.dart';
+import 'package:frenzy_store/data/data_source/local_data_source.dart';
 import 'package:frenzy_store/data/data_source/remote_data_source.dart';
 import 'package:frenzy_store/data/network/app_api.dart';
 import 'package:frenzy_store/data/network/dio_factory.dart';
@@ -49,9 +50,14 @@ Future<void> initAppModule() async {
   getItInstance.registerLazySingleton<RemoteDataSource>(
       () => RemoteDataSourceImpl(getItInstance<AppServiceClient>()));
 
+  // local data source
+  getItInstance
+      .registerLazySingleton<LocalDataSource>(() => LocalDataSourceImpl());
+
   // repository
   getItInstance.registerLazySingleton<Repository>(() => RepositoryImpl(
         getItInstance<RemoteDataSource>(),
+        getItInstance<LocalDataSource>(),
         getItInstance<NetworkInfo>(),
       ));
 }
